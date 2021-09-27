@@ -14,11 +14,19 @@
           <span>{{ nav.name }}</span>
         </Router-link>
       </div>
+      <button
+        @click="showNav"
+        class="nav-toggle fcc">
+        <img
+          src="https://raw.githubusercontent.com/iWDNN/temp/master/double-arrow-white.png"
+          alt="" />
+      </button>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data(){
     return{
@@ -26,7 +34,7 @@ export default {
         {
           name:'메인',
           href:'/manage/main',
-          imgPath:'https://raw.githubusercontent.com/iWDNN/temp/master/footer-img01.png'
+          imgPath:'https://raw.githubusercontent.com/iWDNN/temp/master/home-white.png'
         },
         {
           name:'메뉴',
@@ -46,7 +54,13 @@ export default {
       ]
     }
   },
+  computed:{
+
+  },
   methods:{
+    showNav(){
+      this.$store.commit('status/updateState')
+    }
   }
 }
 </script>
@@ -59,12 +73,13 @@ nav{
   position:fixed;
   top:0;
   left:0;
-  background-color:$primary;
+  background-color:$m2;
   color:$white;
   .box{
     display:flex;
     flex-direction: column;
     align-items: center;
+    position:relative;
     .item{
       flex-direction: column;
       width:50px;
@@ -94,6 +109,19 @@ nav{
           font-size:12px;
         }
       }
+    }
+  }
+  .nav-toggle{
+    width:50px;
+    height:50px;
+    position: absolute;
+    bottom:1px;
+    border:none;
+    outline:none;
+    background-color:$m1;
+    img{
+      width:25px;
+      height:25px;
     }
   }
 }

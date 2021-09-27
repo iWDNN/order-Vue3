@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-
+import store from '~/store'
 // main
 import Management from './Management'
 import Login from './Login'
@@ -29,6 +29,14 @@ export default createRouter({
     {
       path: '/manage',
       component: Management,
+      beforeEnter: (to, from, next) => {
+        const isLogin = store.getters['login/getisLogin']
+        if (isLogin) {
+          next()
+        } else {
+          to('/login')
+        }
+      },
       children: [
         {
           path: 'main',

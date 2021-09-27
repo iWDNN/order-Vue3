@@ -1,4 +1,4 @@
-import { registerUser } from '~/api'
+import axios from 'axios'
 
 export default {
   namespaced: true,
@@ -9,13 +9,31 @@ export default {
   mutations: '',
   actions: {
     async regUser(userData) {
-      const res = await registerUser(userData)
-      console.log(res)
-      if (res.status == 201) {
-        alert(`${res.message} ${res.data.username}님 환영합니다!`)
-      } else {
-        alert(`${res.message}`)
-      }
+      const url = 'http://13.124.45.246:8080/users'
+      console.log(userData)
+      axios.post(url, userData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err.message)
+        })
+
     }
   }
+}
+
+
+
+function _register(userData) {
+
+  return new Promise((resolve, reject) => {
+    axios.post(url, userData)
+      .then(res => {
+        resolve(res)
+      })
+      .catch(err => {
+        reject(err.message)
+      })
+  })
 }

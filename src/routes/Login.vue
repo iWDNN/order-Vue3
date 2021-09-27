@@ -2,37 +2,38 @@
   <div class="wrap fcc">
     <div class="login-box fcc">
       <h1 class="title fcc">
-        <span>T</span>EST
+        <span>O</span>RDER
       </h1>
-      <form>
+      <form @submit.prevent="submitForm">
         <div class="line">
-          <label for="email">아이디</label>
+          <label for="username">아이디</label>
           <input
-            v-model="email"
-            id="email"
-            type="email" />
+            placeholder="아이디"
+            v-model="username"
+            id="username"
+            type="text" />
         </div>
         <div class="line">
           <label for="password">비밀번호</label>
           <input
+            placeholder="비밀번호"
             v-model="password"
             id="password"
             type="password" />
         </div>
         <button
-          class="login-btn"
-          @click="submitForm">
+          class="login-btn">
           로그인
         </button>
-        <button @click="test2">
-          test2
-        </button>
       </form>
-      <Router-link to="/sign_up">
+      <Router-link
+        class="reg-btn"
+        to="/sign_up">
         회원가입
       </Router-link>
     </div>
   </div>
+  <div class="wrap-background"></div>
 </template>
 
 <script>
@@ -40,7 +41,7 @@ import axios from 'axios'
 export default {
   data(){
     return{
-      email:'',
+      username:'',
       password:''
     }
   },
@@ -50,55 +51,59 @@ export default {
   methods:{
     submitForm(){
       const data = {
-        email:this.email,
+        username:this.username,
         password:this.password
       }
       console.log(data)
       this.$store.dispatch('login/login',data)
     },
-    // test2(){
-    //   const data = {
-    //     username:'test',
-    //     password:'1234'
-    //   }
-    //   axios.post('http://13.124.45.246:8080/users/login',data)
-    //     .then(res=>{
-    //       console.log(res)
-    //     })
-    //     .catch(err=>{
-    //       console.log(err)
-    //     })
-
-    // }
+    test2(){
+      const isLogin = this.$store.getters['login/getisLogin']
+      console.log(isLogin)
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
+.wrap-background{
+  position:absolute;
+  z-index:1;
+  width:100vw;
+  height:100vh;
+  filter:grayscale(0.5) opacity(0.9);
+  background-image:url('https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80');
+  background-position: center;
+  background-size:cover;
+}
 .wrap{
+  position:absolute;
   width:100vw;
   height:100vh;
   .login-box{
     width:300px;
     height:400px;
-    background-color:white;
-    border:1px solid $gray-800;
+    background-color:$m1;
+    border:1px solid $m1;
     flex-direction: column;
     border-radius:15px;
     .title{
       height:25%;
       font-family: "Oswald", sans-serif;
       font-weight: 700;
-      font-size:36px;
+      font-size:41px;
+      color:lighten($m2, 5%);
       span{
-        font-size:40px;
+        color:lighten($m2, 5%);
+        font-size:45px;
       }
     }
     form{
+      width:60%;
+      height:70%;
       display:flex;
       align-items: center;
       flex-direction: column;
-      width:60%;
-      height:75%;
+      color:$m1;
       .line{
         display:flex;
         flex-direction: column;
@@ -106,6 +111,7 @@ export default {
         margin:10px 0;
         box-sizing: border-box;
         width:100%;
+        color:$m5;
         label{
           font-size:12px;
           margin-bottom:5px;        
@@ -117,33 +123,50 @@ export default {
           height:35px;
           padding:5px 10px;
           outline:none;
-          border: 1px solid black;
+          border: 1px solid $m1;
           border-radius: 15px;
           transition:.4s;
+          &::placeholder{
+            color:$gray-400;
+          }
           &:hover{
-            width:280px;
+            text-align:center;
+            width:260px;
+          }
+          &:hover::placeholder{
+            color:$m5;
           }
           &:focus{
-            width:280px;
+            text-align:center;
+            width:260px;
           }
         }
       }
       .login-btn{
         display:block;
         margin-top:20px;
-        width:130px;
-        height:35px;
-        border:1px solid black;
+        width:90%;
+        height:42px;
+        border:1px solid $m2;
         border-radius: 15px;
-        font-size:12px;
-        background-color: white;
+        font-size:13px;
+        font-weight: 700;
+        background-color:$m2;
         transition:.2s;
+        color:$m5;
+        opacity: 0.6;
         &:hover{
-          background-color:invert($color: #FFF);
-          color:white;
-          border:1px solid white;
+          background-color:$m1;
+          color:$m5;
+          border:1px solid $m5;
         }
       }
+    }
+    .reg-btn{
+      font-size:13px;
+      color:$m5;
+      text-decoration: none;
+      margin-bottom:15px;
     }
   }
 }

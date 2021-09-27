@@ -30,20 +30,26 @@ export default {
   },
   actions: {
     login({ dispatch }, payload) {
-      const url = "https://reqres.in/api/login"
+      const url = "http://13.124.45.246:8080/users/login"
       axios.post(url, payload)
         .then(res => {
-          let token = res.data.token
-          VueCookies.set("accessToken", token, "1d")
-          dispatch('getMemberInfo')
-          alert('로그인 성공')
+          console.log(res)
+          if (res.data.status == 200) {
+            let token = res.data.accessToken
+            VueCookies.set("accessToken", token, "1d")
+            dispatch('getMemberInfo')
+            alert(res.data.message)
+          } else
+            alert(res.data.message)
+
+          // router.push('/manage')
         })
         .catch(err => {
-          alert('토큰을 얻지 못했습니다')
+          alert(err.message)
           console.log(err)
         })
     },
-    getMemberInfo({ commit }) {
+    getMemberInfo({ commit, dispatch }) {
       const url = "https://reqres.in/api/users/2"
       const token = VueCookies.get("accessToken")
       if (token) {
@@ -58,14 +64,15 @@ export default {
             commit('loginSuccess', data)
           })
           .catch(err => {
-            alert('토큰을 가지고 데이터정보를 요청하는데 실패했습니다')
+            alert('토큰을 가지고 데이터를 요청하는데 실패했습니다')
             console.log(err)
+            dispatch('logOut')
           })
       }
     },
-    logOut({ commit }) {
-      commit('logout')
-      router.go() // 뭔지 모르겠는데 새로고침 안하면 로그인 2번해야 들어가짐
+    async logOut({ commit }) {
+      await commit('logout')
+      router.push('/login')
     },
   }
 }
