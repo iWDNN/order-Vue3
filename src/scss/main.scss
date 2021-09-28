@@ -1,6 +1,6 @@
 // $primary
 $m1:transparent;
-$m2:#01a72b;;
+$m2:#3B3B98;
 $m3:#94b1e6;
 $m4:black;
 $m5:white;
@@ -27,11 +27,13 @@ $m5:white;
   width:100%;
   height:100%;
   position:relative;
+  transition:0.2s ease;
 }
 .header{
   width:100%;
   height:65px;
   display:flex;
+  margin-left:1px;
   flex-shrink: 0;
   border-bottom: 1px solid #E5E5E5;
 }
@@ -61,29 +63,44 @@ $m5:white;
   left:50%;
   transform: translate(-50%,-50%);
   margin:auto;
-  background-color: $gray-100;
   width:300px;
-  height:150px;
-  border-radius: 10px;
-  border:1px solid $gray-200; 
+  height:350px;
+  border:1px solid black;
 }
 button{
   cursor: pointer;
 }
 
 .add-menu-toggle{
-  position:fixed;
+  position: fixed;
   bottom:20px;
   right:20px;
   width:40px;
   height:40px;
   border:2px solid white;
-  background-color:$primary;
+  background-color:$m2;
   outline:none;
   border-radius: 50%;
   color:white;
+  transition:0.2s ease;
   img{
     width:100%;
     height:80%;
   }
+  &:hover{
+    transform: rotate(90deg);
+    transition: 0.2s linear;
+  }
+}
+.add-close-btn{
+  border:none;
+  outline:none;
+  position: absolute;
+  top:15px;
+  right:15px;
+  background-color:transparent;
+}
+.rotate-180{
+  transform: rotate(180deg);
+  transition: 0.2s linear;
 }

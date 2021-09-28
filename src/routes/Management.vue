@@ -1,17 +1,24 @@
 <template>
   <div class="wrap">
     <Nav />
-    <div class="nav-blank"></div>
     <Router-view />
   </div>
 </template>
 
 <script>
 import Nav from '~/components/Nav'
+import { mapState } from 'vuex'
 export default {
   components:{
     Nav
-  }
+  },
+  computed:{
+    ...mapState('status',[
+      'collapsed',
+      'navWidth'
+    ])
+  },
+  
 }
 </script>
 

@@ -33,10 +33,9 @@ export default {
       const url = "http://13.124.45.246:8080/users/login"
       axios.post(url, payload)
         .then(res => {
-          console.log(res)
           if (res.data.status == 200) {
             let token = res.data.accessToken
-            VueCookies.set("accessToken", token, "1d")
+            VueCookies.set("accessToken", token, "1h")
             dispatch('getMemberInfo')
             alert(res.data.message)
           } else
@@ -49,25 +48,11 @@ export default {
           console.log(err)
         })
     },
-    getMemberInfo({ commit, dispatch }) {
-      const url = "https://reqres.in/api/users/2"
-      const token = VueCookies.get("accessToken")
+    getMemberInfo({ commit }) {
+      let token = VueCookies.get('accessToken')
       if (token) {
-        let config = {
-          headers: {
-            "accessToken": token
-          }
-        }
-        axios.get(url, config)
-          .then(res => {
-            const data = res.data
-            commit('loginSuccess', data)
-          })
-          .catch(err => {
-            alert('토큰을 가지고 데이터를 요청하는데 실패했습니다')
-            console.log(err)
-            dispatch('logOut')
-          })
+        commit('loginSuccess')
+        router.push('/manage/table') // 모든 유저 데이터 새로고침이 여기로만 이동함 수정필요..
       }
     },
     async logOut({ commit }) {

@@ -13,7 +13,7 @@
       </h1>
       <form
         class="fcc"
-        @submit.prevent="submitForm">
+        @submit.prevent="submitRegForm">
         <div class="line">
           <input
             id="username"
@@ -53,6 +53,9 @@
 </template>
 <script>
 export default {
+  created(){
+    this.$store.dispatch('login/getMemberInfo')
+  },
   data(){
     return{
       username:'',
@@ -63,7 +66,7 @@ export default {
     }
   },
   methods:{
-    submitForm(){
+    submitRegForm(){
       const data = {
         username:this.username,
         password:this.password,
@@ -71,6 +74,7 @@ export default {
         phoneNum:this.phoneNum,
         address:this.address,
       }
+      console.log(data)
       this.$store.dispatch('register/regUser', data)
     }
   }

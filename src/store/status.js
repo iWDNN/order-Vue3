@@ -4,15 +4,18 @@ export default {
   namespaced: true,
   state: () => ({
     collapsed: true,
-    navWidth: 50
+    navWidth: '50px',
   }),
   getters: '',
   mutations: {
     updateState(state) {
-      const WIDTH = 50
-      const WIDTH_COLLPASED = 200
-      state.toggle = !state.toggle
-
+      state.collapsed = !state.collapsed
+      const WIDTH = 180
+      const WIDTH_COLLPASED = 50
+      let width = computed(() =>
+        `${state.collapsed ? WIDTH_COLLPASED : WIDTH}px`
+      )
+      state.navWidth = width
     }
   },
 

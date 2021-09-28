@@ -14,27 +14,40 @@ import OrderList from '~/components/OrderList'
 
 export default createRouter({
   history: createWebHashHistory(),
+  scrollBehavior() {
+    return {
+      top: 0
+    }
+  },
   routes: [
     {
       path: '/',
+      beforeEnter: (to, from, next) => {
+        let isLoginObj = store.getters['login/getisLogin']
+        if (isLoginObj.isLogin) {
+          next({ path: '/manage' })
+        } else {
+          next({ path: '/login' })
+        }
+      }
     },
     {
       path: '/login',
-      component: Login
+      component: Login,
     },
     {
       path: '/sign_up',
-      component: SignUp
+      component: SignUp,
     },
     {
       path: '/manage',
       component: Management,
       beforeEnter: (to, from, next) => {
-        const isLogin = store.getters['login/getisLogin']
-        if (isLogin) {
+        let isLoginObj = store.getters['login/getisLogin']
+        if (isLoginObj.isLogin) {
           next()
         } else {
-          to('/login')
+          next({ path: '/login' })
         }
       },
       children: [

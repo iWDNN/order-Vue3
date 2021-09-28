@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    :style="{ 'margin-left': navWidth}">
     <header class="header">
       <div class="o-nav">
         <div class="order-status">
@@ -30,10 +32,17 @@
 
 <script>
 import OrderItem from '~/components/OrderItem'
+import { mapState } from 'vuex'
 export default {
   components:{
     OrderItem
-  }
+  },
+  computed:{
+    ...mapState('status',[
+      'collapsed',
+      'navWidth',
+    ])
+  },
 }
 </script>
 

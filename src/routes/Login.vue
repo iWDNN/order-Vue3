@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   data(){
     return{
@@ -45,9 +44,9 @@ export default {
       password:''
     }
   },
-  created(){
-    this.$store.dispatch('login/getMemberInfo')
-  },
+  // creadted(){
+  //   this.$store.dispatch('login/getMemberInfo')
+  // },
   methods:{
     submitForm(){
       const data = {
@@ -91,9 +90,9 @@ export default {
       font-family: "Oswald", sans-serif;
       font-weight: 700;
       font-size:41px;
-      color:lighten($m2, 5%);
+      color:lighten($m2, 30%);
       span{
-        color:lighten($m2, 5%);
+        color:lighten($m2, 30%);
         font-size:45px;
       }
     }

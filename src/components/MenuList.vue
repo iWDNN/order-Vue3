@@ -1,7 +1,10 @@
 <template>
   <!-- <h1>메뉴리스트입니다</h1> -->
-  <div class="container">
-    <header class="header">
+  <div
+    class="container"
+    :style="{ 'margin-left': navWidth}">
+    <header
+      class="header">
       <div class="h-nav">
         <div
           v-for="nav in navs"
@@ -16,28 +19,27 @@
       </div>
     </header>
     <section class="section">
-      <!-- <button @click="test">
-        test
-      </button> -->
       <MenuItem 
         v-for="info in menuList"
         :key="info.imdbID"
         :info="info" />
     </section>
+    <button
+      @click="addToggle"
+      v-if="!toggle"
+      class="add-menu-toggle fcc">
+      <img
+        src="https://raw.githubusercontent.com/iWDNN/temp/master/add-icon.png"
+        alt="add" />
+    </button>
   </div>
-  <button
-    v-if="!toggle"
-    @click="addToggle"
-    class="add-menu-toggle fcc">
-    <img
-      src="https://raw.githubusercontent.com/iWDNN/temp/master/add-icon.png"
-      alt="add" />
-  </button>
+
+  <!-- 메뉴 추가시키는 사이드바 -->
   <div
     v-if="toggle"
     class="add-menu-blank"></div>
   <div
-    v-if="toggle"
+    :class="{'open':toggle}"
     class="add-menu fj">
     <button
       class="add-close-btn"
@@ -104,6 +106,10 @@ export default {
   computed:{
     ...mapState('menu',[
       'menuList'
+    ]),
+    ...mapState('status',[
+      'collapsed',
+      'navWidth',
     ])
   },
   data(){
@@ -125,7 +131,7 @@ export default {
       toggle:false,
       name:'',
       desc:'',
-      price:0,
+      price:null,
       categoryId:''
     }
   },
@@ -146,15 +152,13 @@ export default {
       }
       this.$store.dispatch('menu/postMenuItem',data)
     }
-    // test(){
-    //   console.log(this.$store.state.menu.menuInfos)
-    // }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .container{
+  transition:0.2s;
   .header{
     .h-nav{
       display:flex;
@@ -162,6 +166,10 @@ export default {
       .item{
         width:50px;
         height:100%;
+        margin:0 10px;
+        &:first-child{
+          margin:0 50px;
+        }
         .link{
           width:100%;
           height:100%;
@@ -169,6 +177,13 @@ export default {
           outline:none;
           font-size:12px;
           background-color:$white;
+          &:hover{
+            border-bottom:2px solid $m4;
+          }
+          &:focus{
+            font-weight:700;
+            border-bottom:2px solid $m4;
+          }
         }
       }
     }
@@ -188,20 +203,14 @@ $add-menu-width:260px;
   width:$add-menu-width;
   height:100%;
   position:fixed;
-  right:0;
+  right:-$add-menu-width;
   flex-direction: column;
   background-color: white;
   border-left:2px solid #EEEEEE;
   padding:20px;
   box-sizing: border-box;
-  .add-close-btn{
-    border:none;
-    outline:none;
-    position: absolute;
-    top:15px;
-    right:15px;
-    background-color:transparent;
-  }
+  transition:0.2s ease;
+  // .add-close-btn{}
   h1{
     display: block;
     margin:0;
@@ -254,5 +263,8 @@ $add-menu-width:260px;
       }
     }
   }
+}
+.open{
+  right:0;
 }
 </style>
