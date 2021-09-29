@@ -27,30 +27,13 @@ export default {
           alert('회원가입에 실패했습니다')
         })
     },
-    //식당등록
-    regRes(context, payload) {
-      const actoken = VueCookies.get("accessToken")
-      const url = 'http://13.124.45.246:8080/stores'
-      console.log(payload)
-      if (actoken) {
-        let config = {
-          'headers': { 'Authorization': `Bearer ${actoken}` }
-        }
-        axios.post(url, payload, config)
-          .then(res => {
-            console.log(res)
-            if (res.data.status == 201)
-              alert(res.data.message)
-          })
-          .catch(err => {
-            console.log(err.message)
-          })
-      } else {
-        alert('토큰X')
-      }
-    }
+
+
   }
 }
+
+
+
 
 
 

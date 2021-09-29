@@ -1,42 +1,47 @@
 <template>
-  <div
-    class="t-table">
-    <div class="title fcc">
-      <div class="status">
-        {{ table.tablestatus }}
-      </div>
-      <div
-        class="num">
-        {{ table.numberOfPeople }}인용
-      </div>
-      <div
-        class="name">
-        {{ table.name }}
-      </div>
-      <!-- <div class="timer">00:01</div> -->
-    </div>
-    <div class="info">
-      <div class="menulist fcc">
-        <div
-          class="menuItem"
-          v-for="menu in table.orders"
-          :key="menu">
-          <span>이름 : {{ menu.name }}&nbsp;&nbsp;&nbsp;</span>
-          <span>개수 : {{ menu.count }}</span>
+  <div>
+    <div
+      @click="getTableId(table.id)"
+      class="t-table">
+      <div class="title fcc">
+        <div class="status">
+          {{ table.tablestatus }}
         </div>
-      </div>
-      <div class="request fcc">
         <div
-          class="menuItem"
-          v-for="menu in table.orders"
-          :key="menu">
-          <span>{{ menu.request }}&nbsp;&nbsp;&nbsp;</span>
+          class="num">
+          {{ table.numberOfPeople }}인용
+        </div>
+        <div
+          class="name">
+          {{ table.name }}
+        </div>
+      <!-- <div class="timer">00:01</div> -->
+      </div>
+      <div class="info">
+        <div class="menulist fcc">
+          <div
+            class="menuItem"
+            v-for="menu in table.orders"
+            :key="menu">
+            <span>이름 : {{ menu.name }}&nbsp;&nbsp;&nbsp;</span>
+            <span>개수 : {{ menu.count }}</span>
+          </div>
+        </div>
+        <div class="request fcc">
+          <div
+            class="menuItem"
+            v-for="menu in table.orders"
+            :key="menu">
+            <span>{{ menu.request }}&nbsp;&nbsp;&nbsp;</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
+import Detail from '~/components/Detail'
 export default {
   props:{
     table:{
@@ -49,9 +54,14 @@ export default {
       toggle:false
     }
   },
+  computed:{
+    ...mapState('status',[
+      'detailToggle'
+    ]),
+  },
   methods:{
-    showTableInfo(){
-      this.toggle = !this.toggle
+    getTableId(id){
+      console.log(id)
     }
   }
 }
@@ -63,6 +73,7 @@ export default {
   height:160px;
   box-shadow: 0 3px lighten($m4,80%);
   border-radius:5px;
+  transition:0.2s ease-in-out;
   //내부요소
   display:flex;
   flex-direction: column;
@@ -106,5 +117,4 @@ export default {
     }
   }
 }
-
 </style>

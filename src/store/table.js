@@ -72,7 +72,7 @@ export default {
     },
   }
 }
-function _fetchTableList(type) {
+function _fetchTableList(type) { // 나중에 페이지 사이즈 담기
   const actoken = VueCookies.get("accessToken")
   const url = 'http://13.124.45.246:8080/tables?page=0&size=10'
   return new Promise((resolve, reject) => {

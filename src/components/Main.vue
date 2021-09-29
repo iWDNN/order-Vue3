@@ -4,43 +4,20 @@
     :style="{ 'margin-left': navWidth}">
     <div class="info">
       <header class="header fa">
-        <button @click="logout">
+        <button
+          class="logout"
+          @click="logout">
           로그아웃
         </button>
         <button @click="test">
           test
         </button>
       </header>
-      <section class="section">
+      <section class="Main-section">
+        <div class="title fa">
+          <h1>{{ store.name }}</h1>
+        </div>
       </section>
-    </div>
-    <div class="modal fcc">
-      <div class="box fcc">
-        <h1 class="title">
-          식당 등록
-        </h1>
-        <form
-          class="fcc"
-          @submit.prevent="submitResForm">
-          <input
-            v-model="name"
-            placeholder="식당명"
-            type="text" />
-          <input
-            v-model="description"
-            placeholder="설명"
-            type="text" />
-          <input
-            v-model="licenseImage"
-            placeholder="사업자등록증"
-            type="text" />
-          <button
-            class="reg-btn"
-            type="submit">
-            등록
-          </button>
-        </form>
-      </div>
     </div>
   </div>
 </template>
@@ -52,16 +29,17 @@ import { mapState } from 'vuex'
 export default {
   data(){
     return{
-      name:'',
-      description:'',
-      licenseImage:''
     }
   },
   computed:{
     ...mapState('status',[
       'collapsed',
       'navWidth',
-    ])
+    ]),
+    ...mapState('restaurant',[
+      'store',
+    ]),
+    
   },
   methods:{
     logout(){
@@ -73,7 +51,7 @@ export default {
         description:this.description,
         licenseImage:this.licenseImage,
       }
-      this.$store.dispatch('register/regRes',data)
+      this.$store.dispatch('restaurant/regRes',data)
     },
     test(){
     }
@@ -102,9 +80,28 @@ export default {
           border:1px solid $m5;
         }
       }
+      .logout{
+        z-index:100;
+      }
     }
-    .section{
-    
+    .Main-section{
+      display: flex;
+      flex-direction: column;
+      .title{
+        width:90%;
+        height:60px;
+        border-radius: 10px;
+        background-color:$m2;
+        box-sizing: border-box;
+        margin: 0 20px; // 임시방편
+        h1{
+          color:$m5;
+          padding-left:30px;
+          font-family: 'Oswald',sans-serif;
+          font-weight: 700;
+          font-size:30px;
+        }
+      }
     }
   }
   .modal{

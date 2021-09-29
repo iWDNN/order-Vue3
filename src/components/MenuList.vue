@@ -42,7 +42,7 @@
     :class="{'open':toggle}"
     class="add-menu fj">
     <button
-      class="add-close-btn"
+      class="close-btn"
       @click="addToggle">
       X
     </button>
@@ -217,7 +217,6 @@ $add-menu-width:260px;
     padding-bottom:5px;
     border-bottom:1px solid black;
   }
-    
   form{
     position:relative;
     height:100%;

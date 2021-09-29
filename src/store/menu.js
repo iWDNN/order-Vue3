@@ -27,7 +27,7 @@ export default {
       const res = await _fetchMenu(type) // 요청
       const { Search } = res.data // 객체 분해 해서 데이터값 저장 
       commit('updateMenuList', Search) // 스테이트변수에 데이터 저장
-      console.log(Search)
+      // console.log(Search)
     },
 
     // post
