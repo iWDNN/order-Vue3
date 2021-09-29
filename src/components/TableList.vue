@@ -59,7 +59,6 @@
 
   <!-- 테이블 정보 보는 사이드바 -->
   <div
-    v-if="detailToggle"
     class="showTable-blank">
   </div>
   <div
@@ -69,7 +68,7 @@
       class="close-btn">
       X
     </button>
-    <h1>테이블1</h1>
+    <h1>{{ tableInfo.name }}</h1>
     <div class="order-list">
       <h2>
         <span>주문 내역</span>
@@ -139,8 +138,9 @@ export default {
       'detailToggle'
     ]),
     ...mapState('table',[
-      'tableList'
-    ])
+      'tableList',
+      'tableInfo'
+    ]),
   },
   components:{
     TableItem

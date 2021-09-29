@@ -6,39 +6,17 @@ import router from '~/routes/index.js'
 export default {
   namespaced: true,
   state: () => ({
-    tableList: [
-      // {
-      //   id: 1,
-      //   name: '테이블 1',
-      //   numberOfPeople: 5,
-      //   totalPrice: 10000,
-      //   tableStatus: 'OPEN',
-      //   orders: [
-      //     {
-      //       id: 1,
-      //       name: "음식1",
-      //       orderPrice: 5000,
-      //       count: 2,
-      //       request: "잘부탁드립니다.",
-      //       orderStatus: "ORDER"
-      //     },
-      //     {
-      //       id: 2,
-      //       name: "음식2",
-      //       orderPrice: 5000,
-      //       count: 3,
-      //       request: "개맛없어.",
-      //       orderStatus: "ORDER"
-      //     },
-      //   ]
-      // }
-    ]
+    tableList: [],
+    tableInfo: {}
   }),
   getters: '',
   mutations: {
     updateTableList(state, payload) {
       state.tableList = payload
-    }
+    },
+    updateTableInfo(state, payload) {
+      state.tableInfo = payload
+    },
   },
   actions: {
     // 테이블 조회
@@ -46,6 +24,17 @@ export default {
       const res = await _fetchTableList()
       console.log(res.data)
       commit('updateTableList', res.data.data.content)
+    },
+    // 테이블 찾기
+    async searchTableItem({ commit }, payload) {
+      const res = await _fetchTableList()
+      let data = res.data.data.content
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id == payload) {
+          commit('updateTableInfo', data[i])
+        }
+      }
+
     },
     // 테이블 등록
     regTableItem({ dispatch }, payload) {

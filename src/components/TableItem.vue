@@ -62,6 +62,7 @@ export default {
   methods:{
     getTableId(id){
       console.log(id)
+      this.$store.dispatch('table/searchTableItem',id)
     }
   }
 }
