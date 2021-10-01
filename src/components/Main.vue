@@ -5,11 +5,13 @@
     <div class="info">
       <header class="header fa">
         <button
-          class="logout"
+          class="btn"
           @click="logout">
           로그아웃
         </button>
-        <button @click="test">
+        <button
+          class="btn"
+          @click="test">
           test
         </button>
       </header>
@@ -64,7 +66,7 @@ export default {
   .info{
     .header{
       justify-content: flex-end;
-      button{
+      .btn{
         width:130px;
         height:35px;
         outline:none;       
@@ -81,7 +83,6 @@ export default {
         }
       }
       .logout{
-        z-index:100;
       }
     }
     .Main-section{

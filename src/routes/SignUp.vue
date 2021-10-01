@@ -1,15 +1,8 @@
 <template>
   <div class="wrap fcc">
     <div class="reg-box fa">
-      <h1 class="title">
+      <h1 class="title fcc">
         <span>회원가입</span>
-        <Router-link
-          class="home-btn fcc"
-          to="/login">
-          <img
-            src="https://raw.githubusercontent.com/iWDNN/temp/master/back-arrow-white.png"
-            alt="" />
-        </Router-link>
       </h1>
       <form
         class="fcc"
@@ -47,6 +40,13 @@
           회원가입
         </button>
       </form>
+      <Router-link
+        class="home-btn fcc"
+        to="/login">
+        <img
+          src="https://raw.githubusercontent.com/iWDNN/temp/master/back-arrow-white.png"
+          alt="" />
+      </Router-link>
     </div>
   </div>
   <div class="wrap-background"></div>
@@ -75,7 +75,7 @@ export default {
         address:this.address,
       }
       console.log(data)
-      this.$store.dispatch('register/regUser', data)
+      this.$store.dispatch('signUp/regUser', data)
     }
   }
 }
@@ -87,10 +87,11 @@ export default {
   z-index:1;
   width:100vw;
   height:100vh;
-  filter:grayscale(0.5) opacity(0.9);
-  background-image:url('https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80');
-  background-position: center;
-  background-size:cover;
+  background-color:$m6;
+  // filter:grayscale(0.5) opacity(0.9);
+  // background-image:url('https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80');
+  // background-position: center;
+  // background-size:cover;
 }
 .wrap{
   position:absolute;
@@ -103,30 +104,19 @@ export default {
     border:1px solid $m1;
     flex-direction: column;
     border-radius:15px;
+    position:relative;
     .title{
       width:90%;
       display:flex;
-      justify-content: space-between;
       margin-top:50px;
-      margin-bottom:20px;
-      padding-left:10px;
+      margin-bottom:30px;
       flex-shrink: 0;
       span{
-        color:$m5;
+        color:lighten($m2, 20%);
         font-size:20px;
         font-weight:700;
         margin:0;
         padding:0;
-      }
-      .home-btn{
-        width:25px;
-        height:25px;
-        img{
-          width:100%;
-          height:100%;
-          padding-bottom:5px;
-          padding-right:5px;
-        }
       }
     }
     form{
@@ -144,27 +134,31 @@ export default {
           padding-left:10px;
           outline:none;
           border:none;
-          border-bottom:2px solid $gray-400;
+          border-bottom:2px solid $gray-200;
+          &::placeholder{
+            color:$gray-400;
+          }
         }
       }
       .reg-btn{
         display:block;
-        margin-top:20px;
-        width:90%;
-        height:42px;
-        border:1px solid $m2;
-        border-radius: 15px;
-        font-size:13px;
-        font-weight: 700;
-        background-color:$m2;
-        transition:.2s;
-        color:$m5;
-        opacity: 0.6;
+        margin-top:30px;
+        width:60%;
         &:hover{
-          background-color:$m1;
-          color:$m5;
-          border:1px solid $m5;
         }
+      }
+    }
+    .home-btn{
+      position:absolute;
+      bottom:-50px;
+      width:50px;
+      height:30px;
+      border-radius:20px;
+      background-color:lighten($m2, 20%);
+      opacity: 0.6;
+      img{
+        width:20px;
+        height:20px;
       }
     }
   }

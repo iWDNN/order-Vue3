@@ -8,6 +8,7 @@
 
 <style lang="scss" scoped>
 tr{
+  font-size:12px;
   td:first-child{
     padding-left:5px;
     text-align: start;

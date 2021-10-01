@@ -2,7 +2,7 @@
   <div class="wrap fcc">
     <div class="login-box fcc">
       <h1 class="title fcc">
-        <span>O</span>RDER
+        ORDER
       </h1>
       <form @submit.prevent="submitForm">
         <div class="line">
@@ -27,7 +27,7 @@
         </button>
       </form>
       <Router-link
-        class="reg-btn"
+        class="sign-up-btn"
         to="/sign_up">
         회원가입
       </Router-link>
@@ -63,16 +63,17 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss" scoped>  
 .wrap-background{
   position:absolute;
   z-index:1;
   width:100vw;
   height:100vh;
-  filter:grayscale(0.5) opacity(0.9);
-  background-image:url('https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80');
-  background-position: center;
-  background-size:cover;
+  background-color:$m6;
+  // filter:grayscale(0.5) opacity(0.9);
+  // background-image:url('https://images.unsplash.com/photo-1588675646184-f5b0b0b0b2de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80');
+  // background-position: center;
+  // background-size:cover;
 }
 .wrap{
   position:absolute;
@@ -90,11 +91,7 @@ export default {
       font-family: "Oswald", sans-serif;
       font-weight: 700;
       font-size:41px;
-      color:lighten($m2, 30%);
-      span{
-        color:lighten($m2, 30%);
-        font-size:45px;
-      }
+      color:lighten($m2, 20%);
     }
     form{
       width:60%;
@@ -110,7 +107,7 @@ export default {
         margin:10px 0;
         box-sizing: border-box;
         width:100%;
-        color:$m5;
+        color:lighten($m2, 20%);
         label{
           font-size:12px;
           margin-bottom:5px;        
@@ -146,24 +143,24 @@ export default {
         margin-top:20px;
         width:90%;
         height:42px;
-        border:1px solid $m2;
+        border:1px solid lighten($m2, 20%);;
         border-radius: 15px;
         font-size:13px;
         font-weight: 700;
-        background-color:$m2;
+        background-color:lighten($m2, 20%);
         transition:.2s;
         color:$m5;
         opacity: 0.6;
         &:hover{
-          background-color:$m1;
-          color:$m5;
-          border:1px solid $m5;
+          background-color:$m5;
+          color:$m2;
+          border:1px solid $m2;
         }
       }
     }
-    .reg-btn{
+    .sign-up-btn{
       font-size:13px;
-      color:$m5;
+      color:lighten($m2, 20%);
       text-decoration: none;
       margin-bottom:15px;
     }

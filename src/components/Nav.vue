@@ -87,13 +87,14 @@ export default {
 nav{
   display:flex;
   width:50px;
-  height:100vh;
+  height:97vh;
   position:fixed;
   top:0;
-  left:0;
   color:$white;
   background-color:$m2;
   border-right:1px solid lighten($m2,10%);
+  border-radius:10px;
+  margin:10px 5px;
   transition: 0.3s ease;
   .box{
     padding-top:20px;

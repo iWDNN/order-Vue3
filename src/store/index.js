@@ -1,11 +1,12 @@
 import { createStore } from 'vuex'
 
 //main
-import register from './register'
+import signUp from './signUp'
 import login from './login'
+import restaurant from './restaurant'
 import menu from './menu'
 import table from './table'
-import restaurant from './restaurant'
+
 
 //toggle
 import status from './status'
@@ -15,7 +16,7 @@ export default createStore({
     login,
     menu,
     table,
-    register,
+    signUp,
     status,
     restaurant
   }

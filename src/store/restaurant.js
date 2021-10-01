@@ -8,33 +8,44 @@ export default {
   }),
   getters: '',
   mutations: {
-    updateState(state, payload) {
+    updateStore(state, payload) {
       state.store = payload
+    },
+    resetStore(state) {
+      state.store = null
     }
   },
   actions: {
     //식당 조회
-    async getStore({ commit }) {
-      const res = await _fetchStore()
-      if (res.data.status == 200) {
-        commit('updateState', res.data.data)
-        console.log(res.data.data)
+    async getStore({ commit }, payload) {
+      const actoken = VueCookies.get("accessToken")
+      const url = 'http://13.124.45.246:8080/stores'
+      if (actoken) {
+        let config = {
+          'headers': { 'Authorization': `Bearer ${actoken}` }
+        }
+        await axios.get(url, config)
+          .then(res => {
+            const data = res.data.data
+            commit('updateStore', data)
+          })
+          .catch(err => {
+            commit('resetStore')
+          })
       } else {
-        alert('식당을 등록해주세요')
+        alert('토큰X')
       }
     },
     //식당등록
     regRes(context, payload) {
       const actoken = VueCookies.get("accessToken")
       const url = 'http://13.124.45.246:8080/stores'
-      console.log(payload)
       if (actoken) {
         let config = {
           'headers': { 'Authorization': `Bearer ${actoken}` }
         }
         axios.post(url, payload, config)
           .then(res => {
-            console.log(res)
             if (res.data.status == 201)
               alert(res.data.message)
           })
@@ -61,6 +72,7 @@ function _fetchStore() {
           resolve(res)
         })
         .catch(err => {
+
           reject(err.message)
         })
     }

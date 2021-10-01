@@ -25,7 +25,7 @@ export default {
       console.log(res.data)
       commit('updateTableList', res.data.data.content)
     },
-    // 테이블 찾기
+    // 테이블 아이디 값으로 찾기
     async searchTableItem({ commit }, payload) {
       const res = await _fetchTableList()
       let data = res.data.data.content
@@ -59,6 +59,27 @@ export default {
         alert('토큰X')
       }
     },
+    // 테이블 수정
+    async putTableInfo({ dispatch }, payload) {
+      const actoken = VueCookies.get("accessToken")
+      const url = `http://13.124.45.246:8080/tables/${payload.id}`
+      if (actoken) {
+        let config = {
+          'headers': { 'Authorization': `Bearer ${actoken}` }
+        }
+        await axios.put(url, payload.form, config)
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        alert('토큰X')
+      }
+      dispatch('getTableList')
+    }
+
   }
 }
 function _fetchTableList(type) { // 나중에 페이지 사이즈 담기

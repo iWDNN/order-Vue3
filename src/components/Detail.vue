@@ -1,11 +1,38 @@
 <template>
   <div
+    v-if="detailToggle"
     class="showTable">
-    <button
-      class="close-btn">
-      X
-    </button>
-    <h1>테이블1</h1>
+    <div class="title">
+      <div
+        v-if="!putToggle"
+        class="main">
+        <h1>{{ tableInfo.name }}</h1>
+        <h5>{{ tableInfo.numberOfPeople }}인석</h5>
+      </div>
+      <form
+        v-if="putToggle"
+        @submit="submitPutTable(tableInfo.id)">
+        <input
+          class="h1"
+          v-model="pName"
+          :placeholder="tableInfo.name"
+          type="text" />
+        <input
+          class="h5"
+          v-model="pNumberOfPeople"
+          :placeholder="`${tableInfo.numberOfPeople}인석`"
+          type="number" />
+        <button
+          type="submit"></button>
+      </form>
+      <div class="sub">
+        <button @click="putToggle = true">
+          <img
+            src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_edit_black_24dp.png"
+            alt="" />
+        </button>
+      </div>
+    </div>
     <div class="order-list">
       <h2>
         <span>주문 내역</span>
@@ -16,16 +43,9 @@
           <th>수량</th>
           <th>금액</th>
         </tr>
-        <tr>
-          <td>에그 필라프</td>
-          <td>1</td>
-          <td>19,900</td>
-        </tr>
-        <tr>
-          <td>스테이크</td>
-          <td>2</td>
-          <td>15,500</td>
-        </tr>
+        <OrderMenuItem />
+        <OrderMenuItem />
+        <OrderMenuItem />
       </table>
     </div>
     <div class="request">
@@ -39,22 +59,65 @@
       </div>
     </div>
     <div class="account">
-      <h2 class="label">
-        합계
+      <h2 class="label fa">
+        <span>합계</span>
       </h2>
-      <h2 class="sum">
+      <h2 class="sum fcc">
         50,900
       </h2>
     </div>
-    <div class="pay fcc">
+    <!-- <div class="pay fcc">
       <button>결제</button>
-    </div> 
+    </div>  -->
   </div>
 </template>
 
 <script>
+import OrderMenuItem from '~/components/OrderMenuItem'
+import { mapState } from 'vuex' 
+
 export default {
-  
+  data(){
+    return{
+      putToggle:false,
+      pName:'',
+      pNumberOfPeople:null,
+    }
+  },
+  computed:{
+  ...mapState('status',[
+      'detailToggle'
+    ]),
+    ...mapState('table',[
+      'tableInfo'
+    ]),
+  },
+  components:{
+    OrderMenuItem
+  },
+  methods:{
+    // 테이블 디테일 호출
+    showTableInfo(){
+      this.$store.commit('status/updateToogle')
+    },
+    // 테이블 디테일 put
+    putTable(){
+      this.putToogle = !this.putToogle
+    },
+    // 테이블 put 전송
+    async submitPutTable(id){
+      const data ={
+        id,
+        form:{
+          name:this.pName,
+          numberOfPeople:this.pNumberOfPeople
+        }
+      }
+      await this.$store.dispatch('table/putTableInfo',data) 
+      this.$router.go()
+    }
+
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -68,23 +131,91 @@ export default {
   box-sizing: border-box;
   border-left:2px solid #EEEEEE;
   flex-direction: column;
-  h1{
-    font-size:22px;
+  .title{
+    height:5%;
+    display:flex;
+    justify-content: space-between;
+    .main{
+      display:flex;
+      flex-direction: column;
+      h1{
+        font-size:22px;
+        margin-bottom:5px;
+      }
+      h5{
+        font-size:14px;
+        color:$gray-600;
+      }
+    }
+    form{
+      display:flex;
+      flex-direction: column;
+      padding:0;
+      margin:0;
+      input{
+        width:90%;
+        border:none;
+        outline:none;
+        padding:0;
+        margin:0;
+      }
+      input::placeholder{
+        font-weight: 500;
+        color:$gray-400;
+      }
+      .h1{
+        font-size:22px;
+        margin-bottom:5px;
+      }
+      .h5{
+        font-size:14px;
+      }
+      button{
+        border:none;
+        outline:none;
+        background-color:$m1;
+      }
+    }
+    .sub{
+      button{
+        width:30px;
+        height:20px;
+        margin-right:10px;
+        border:none;
+        outline:none;
+        background-color: $m1;
+        img{
+          width:100%;
+          height:100%;
+        }
+      }
+    }
   }
   .order-list{
+    height:50%;
     margin:30px 0;
     h2{
       margin:20px 0; 
       span{
         font-size:15px;
-        border-bottom:1px solid $m4;
+        border-bottom:2px solid $m4;
       }
     }
     table{
-
-    }
+        width:100%;
+        font-size:15px;
+        font-weight: 500;
+        tr:first-child{
+          text-align: center;
+          border-bottom: 1px solid #EEEEEE;
+          th{
+            padding-bottom:10px;
+          }
+        }
+      }
   }
   .request{
+    height:20%;
     margin:30px 0;
     h2{
       margin:20px 0; 
@@ -97,7 +228,7 @@ export default {
       box-sizing: border-box;
       .box{
         width:100%;
-        height:60px;
+        height:70px;
         background-color:#EEEEEE;
         padding:10px 10px;
         box-sizing: border-box;
@@ -113,8 +244,14 @@ export default {
   }
   .account{
     display:flex;
+    height:10%;
     .label{
       width:50%;
+      box-sizing: border-box;
+      padding-left:30px;
+      span{
+        border-bottom:2px solid $m4;
+      }
     }
     .sum{
       width:50%;
@@ -122,6 +259,7 @@ export default {
   }
   .pay{
     width:100%;
+    height:10%;
     button{
 
     }

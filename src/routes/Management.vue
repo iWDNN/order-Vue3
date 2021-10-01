@@ -1,6 +1,7 @@
 <template>
   <div class="wrap">
     <Nav />
+    <div class="nav-blank"></div>
     <div
       v-if="!store"
       class="modal-background">
@@ -36,6 +37,11 @@
             등록
           </button>
         </form>
+        <button
+          class="btn abs"
+          @click="logout">
+          뒤로가기
+        </button>
       </div>
     </div>
     <Router-view />
@@ -77,6 +83,9 @@ export default {
       }
       this.$store.dispatch('restaurant/regRes',data)
     },
+    logout(){
+      this.$store.dispatch('login/logOut')
+    }
   }
   
 }
@@ -84,6 +93,11 @@ export default {
 
 <style lang="scss" scoped>
 .wrap{
+  .nav-blank{
+    width:20px;
+    height:100%;
+    flex-shrink: 0;
+  }
   .modal{
     border:1px solid $m2;
     background-color: $m5;
@@ -92,6 +106,7 @@ export default {
       width:80%;
       height:100%;
       flex-direction: column;
+      position:relative;
       .title{
         margin-bottom:50px;
         flex-direction: column;
@@ -122,24 +137,17 @@ export default {
             color:$m5;
           }
         }
-        .reg-btn{
-          display:block;
-          margin-top:20px;
-          width:90%;
-          height:42px;
-          border:1px solid $m2;
-          border-radius: 15px;
-          font-size:13px;
-          font-weight: 700;
-          background-color:$m2;
-          transition:.2s;
-          color:$m5;
-          opacity: 0.6;
-          &:hover{
-            background-color:$m1;
-            color:$m2;
-            border:1px solid $m2;
-          }
+      }
+      .abs{
+        border:none;
+        width:60px;
+        height:20px;
+        position:absolute;
+        bottom:5px;
+        color:$m2;
+        &:hover{
+          border:none;
+          background-color:$m1;
         }
       }
     }

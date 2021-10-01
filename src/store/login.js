@@ -29,14 +29,15 @@ export default {
     }
   },
   actions: {
-    login({ dispatch }, payload) {
+    login({ dispatch, commit }, payload) {
       const url = "http://13.124.45.246:8080/users/login"
       axios.post(url, payload)
         .then(res => {
           if (res.data.status == 200) {
             let token = res.data.accessToken
             VueCookies.set("accessToken", token, "1h")
-            dispatch('getMemberInfo')
+            commit('loginSuccess')
+            router.push('/manage/menu')
             alert(res.data.message)
           } else
             alert(res.data.message)
@@ -52,7 +53,7 @@ export default {
       let token = VueCookies.get('accessToken')
       if (token) {
         commit('loginSuccess')
-        router.push('/manage/table') // 모든 유저 데이터 새로고침이 여기로만 이동함 수정필요..
+        // router.push('/manage/menu') // 모든 유저 데이터 새로고침이 여기로만 이동함 수정필요..
       }
     },
     async logOut({ commit }) {

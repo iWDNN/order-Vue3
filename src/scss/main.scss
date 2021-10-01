@@ -1,9 +1,10 @@
 // $primary
 $m1:transparent;
-$m2:#3B3B98;
+$m2:#34a0a4;
 $m3:#94b1e6;
 $m4:black;
 $m5:white;
+$m6:#f6f7f1;
 
 
 
@@ -41,6 +42,8 @@ $m5:white;
   display:flex;
   flex-wrap:wrap;
   align-content:flex-start;
+  border-radius:20px;
+  // background-color:$m5;
   width:100%;
   height:100%;
 }
@@ -57,6 +60,18 @@ $m5:white;
   display:flex;
   align-items: center;
 }
+.sm-font{
+  font-size:16px;
+}
+.modal.sm{
+  width:300px;
+  height:300px;
+}
+.modal.md{
+  width:300px;
+  height:350px;
+}
+// 작은 컴포넌트들?
 .modal{
   position: fixed;
   z-index:99;
@@ -66,7 +81,9 @@ $m5:white;
   margin:auto;
   width:300px;
   height:350px;
-  border:1px solid black;
+  border:1px solid $m2;
+  background-color: $m5;
+  border-radius: 10px;
 }
 .modal-background{
   position: fixed;
@@ -78,7 +95,81 @@ $m5:white;
 button{
   cursor: pointer;
 }
-
+.btn{
+  width:130px;
+  height:35px;
+  outline:none;       
+  border:1px solid $m2;
+  border-radius: 15px;
+  background-color:transparent;
+  transition: 0.2s linear;
+  font-size:12px;
+  &:hover{
+    background-color:$m2;
+    color:$m5;
+    border:1px solid $m5;
+  }
+  img{
+    width:15px;
+    height:15px;
+  }
+  span{
+    font-size:12px;
+    margin-left:5px;
+  }
+}
+.btn.invert{
+  border:1px solid $m5;
+  background-color:$m2;
+  color:$m5;
+  &:hover{
+    background-color:$m5;
+    color:$m2;
+    border:1px solid $m2;
+  }
+}
+.icon-btn{
+  width:20px;
+  height:20px;
+  background-color:$m1;
+  border:none;
+  outline:none;
+  img{
+    width:20px;
+    height:20px;
+    &:hover{
+      transform: rotate(180deg);
+      transition: 0.4s linear;
+    }
+  }
+}
+.reg-btn{
+  display:block;
+  margin-top:20px;
+  width:90%;
+  height:42px;
+  border:1px solid lighten($m2, 20%);
+  border-radius: 15px;
+  font-size:13px;
+  font-weight: 700;
+  background-color:lighten($m2, 20%);
+  transition:.2s;
+  color:$m5;
+  opacity: 0.6;
+  &:hover{
+    background-color:$m6;
+    color:$m2;
+    border:1px solid lighten($m2, 20%);
+  }
+}
+.close-btn{
+  border:none;
+  outline:none;
+  position: absolute;
+  top:10px;
+  right:10px;
+  background-color:transparent;
+}
 .add-menu-toggle{
   position: fixed;
   bottom:20px;
@@ -99,14 +190,6 @@ button{
     transform: rotate(90deg);
     transition: 0.2s linear;
   }
-}
-.close-btn{
-  border:none;
-  outline:none;
-  position: absolute;
-  top:15px;
-  right:15px;
-  background-color:transparent;
 }
 
 //animaiton
