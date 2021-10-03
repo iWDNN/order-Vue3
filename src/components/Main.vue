@@ -3,22 +3,17 @@
     class="container"
     :style="{ 'margin-left': navWidth}">
     <div class="info">
-      <header class="header fa">
+      <header class="header  fa">
+        <div class="title fa">
+          <h1>{{ store.name }}</h1>
+        </div>
         <button
           class="btn"
           @click="logout">
           로그아웃
         </button>
-        <button
-          class="btn"
-          @click="test">
-          test
-        </button>
       </header>
-      <section class="Main-section">
-        <div class="title fa">
-          <h1>{{ store.name }}</h1>
-        </div>
+      <section class="section">
       </section>
     </div>
   </div>
@@ -65,36 +60,8 @@ export default {
 .container{
   .info{
     .header{
-      justify-content: flex-end;
-      .btn{
-        width:130px;
-        height:35px;
-        outline:none;       
-        border:1px solid $m2;
-        border-radius: 15px;
-        background-color:transparent;
-        transition: 0.2s linear;
-        font-size:12px;
-        margin-right:10px;
-        &:hover{
-          background-color:$m2;
-          color:$m5;
-          border:1px solid $m5;
-        }
-      }
-      .logout{
-      }
-    }
-    .Main-section{
-      display: flex;
-      flex-direction: column;
-      .title{
-        width:90%;
-        height:60px;
-        border-radius: 10px;
-        background-color:$m2;
-        box-sizing: border-box;
-        margin: 0 20px; // 임시방편
+      justify-content: space-between;
+      background-color:$m2;
         h1{
           color:$m5;
           padding-left:30px;
@@ -102,7 +69,17 @@ export default {
           font-weight: 700;
           font-size:30px;
         }
+      .btn{
+        margin-right:10px;
       }
+      .logout{
+      }
+    }
+    .section{
+      display: flex;
+      flex-direction: column;
+      
+      
     }
   }
   .modal{

@@ -123,13 +123,17 @@ export default {
 <style lang="scss" scoped>
 .showTable{
   width:260px;
-  height: 100%;
+  height: 97%;
   position:fixed;
   top:0;
   right:0;
   padding:20px 10px;
   box-sizing: border-box;
+  background-color:$m5;
   border-left:2px solid #EEEEEE;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  margin:10px 0;
   flex-direction: column;
   .title{
     height:5%;

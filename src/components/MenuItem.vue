@@ -1,17 +1,19 @@
 <template>
-  <div class="menu">
+  <div
+    class="menu"
+    @click="getId(info)">
     <div
       class="img"
-      :style="{ backgroundImage:`url(${info.Poster})` }"></div>
+      :style="{ backgroundImage:`url(${info.image})` }"></div>
     <div class="info">
       <div class="name">
-        <span>메뉴 이름 : {{ info.Title }}</span>
+        <span>{{ info.name }}</span>
       </div>
       <div class="desc">
-        <span>메뉴 설명 : {{ info.imdbID }}</span>
+        <span>{{ info.description }}</span>
       </div>
       <div class="price">
-        <span>메뉴 가격 : $ {{ info.Year }}</span>
+        <span>{{ info.price }} 원</span>
       </div>
     </div>
   </div>
@@ -19,6 +21,7 @@
 
 
 <script>
+import { mapState } from 'vuex'
 export default {
   props:{
     info:{
@@ -26,8 +29,30 @@ export default {
       default:()=>({})
     }
   },
+  data(){
+    return{
+      
+    }
+  },
+  computed:{
+    ...mapState('menu',[
+      'mnChangeAlert',
+      'mnDeleteAlert'
+    ]),
+  },
   methods:{
-    
+     getId(info){
+      if(this.mnChangeAlert){
+        this.$store.commit('menu/updateChangeId',info.id)
+      } else if(this.mnDeleteAlert){
+        this.$store.commit('menu/updateDeleteId',info)
+      } else{
+        console.log(info.id)
+      }
+    },
+    updateResetAlert(){
+      this.$store.commit('menu/resetAlert')
+    },
   }
 }
 </script>
@@ -38,6 +63,7 @@ export default {
   width:$div-width;
   height:180px;
   background-color:$gray-200;
+  box-shadow:0 7px 25px rgba(0,0,0,0.08);
   box-sizing: border-box;
   // 내부요소
   display:flex;

@@ -1,10 +1,10 @@
 // $primary
 $m1:transparent;
-$m2:#34a0a4;
+$m2:#2D3038;
 $m3:#94b1e6;
 $m4:black;
 $m5:white;
-$m6:#f6f7f1;
+$m6:#FFE500;
 
 
 
@@ -21,10 +21,12 @@ $m6:#f6f7f1;
   z-index:97;
   width:100vw; 
   height:1000vh;
+  background-color:#F0F5FB;
 }
 .container{
   display: flex;
   flex-direction: column;
+  margin-right:10px;
   width:100%;
   height:100%;
   position:relative;
@@ -34,18 +36,27 @@ $m6:#f6f7f1;
   width:100%;
   height:65px;
   display:flex;
+  background-color:$m5;
+  margin:10px 0;
   margin-left:1px;
   flex-shrink: 0;
+  box-shadow:0 7px 25px rgba(0,0,0,0.08);
   border-bottom: 1px solid #E5E5E5;
+  border-radius:12px;
+}
+.black{
+  background-color:$m2;
 }
 .section{
   display:flex;
   flex-wrap:wrap;
   align-content:flex-start;
-  border-radius:20px;
-  // background-color:$m5;
+  margin-left:1px;
+  border-radius:12px;
+  background-color:$m5;
   width:100%;
   height:100%;
+  box-shadow:0 7px 25px rgba(0,0,0,0.08);
 }
 .fcc{
   display:flex;
@@ -84,6 +95,7 @@ $m6:#f6f7f1;
   border:1px solid $m2;
   background-color: $m5;
   border-radius: 10px;
+  box-shadow:0 7px 25px rgba(0,0,0,0.08);
 }
 .modal-background{
   position: fixed;
@@ -91,6 +103,34 @@ $m6:#f6f7f1;
   width:100vw;
   height:100vh;
   backdrop-filter: blur(2px);
+}
+.alert{
+  flex-shrink: 0;
+  .alert-box{
+    height:33px;
+    justify-content: space-between;
+    background-color:$m2;
+    border-radius:10px;
+    font-size:12px;
+    padding:1px 20px;
+    color:$m5;
+    img{
+      margin-left:2px;
+      width:15px;
+      height:15px;
+      margin-bottom:3px;
+    }
+    .alert-btn{
+      height:20px;
+      margin-left:10px;
+      border:1px solid $gray-500;
+      outline:none;
+      background-color:lighten($m2,10%);
+      color:$m5;
+      border-radius:5px;
+      font-size:12px;
+    }
+  }
 }
 button{
   cursor: pointer;
@@ -101,7 +141,7 @@ button{
   outline:none;       
   border:1px solid $m2;
   border-radius: 15px;
-  background-color:transparent;
+  background-color:$m5;
   transition: 0.2s linear;
   font-size:12px;
   &:hover{
@@ -157,7 +197,7 @@ button{
   color:$m5;
   opacity: 0.6;
   &:hover{
-    background-color:$m6;
+    background-color:$m5;
     color:$m2;
     border:1px solid lighten($m2, 20%);
   }
@@ -187,8 +227,6 @@ button{
   }
   &:hover{
     background-color:$m2;
-    transform: rotate(90deg);
-    transition: 0.2s linear;
   }
 }
 

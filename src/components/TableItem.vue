@@ -71,7 +71,7 @@ export default {
   margin:18px;
   width:150px;
   height:160px;
-  box-shadow: 0 3px lighten($m4,80%);
+  box-shadow:0 1px 25px rgba(0,0,0,0.08);
   border-radius:5px;
   transition:0.2s ease-in-out;
   //내부요소

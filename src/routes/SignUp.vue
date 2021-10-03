@@ -108,7 +108,7 @@ export default {
     .title{
       width:90%;
       display:flex;
-      margin-top:50px;
+      margin-top:44px;
       margin-bottom:30px;
       flex-shrink: 0;
       span{
@@ -120,7 +120,7 @@ export default {
       }
     }
     form{
-      width:90%;
+      width:75%;
       flex-direction: column;
       .line{
         width:100%;

@@ -2,6 +2,10 @@
   <div class="wrap">
     <Nav />
     <div class="nav-blank"></div>
+    <Router-view />
+
+
+    <!-- 테이블 조회 모달 -->
     <div
       v-if="!store"
       class="modal-background">
@@ -44,7 +48,6 @@
         </button>
       </div>
     </div>
-    <Router-view />
   </div>
 </template>
 
@@ -94,7 +97,7 @@ export default {
 <style lang="scss" scoped>
 .wrap{
   .nav-blank{
-    width:20px;
+    width:16px;
     height:100%;
     flex-shrink: 0;
   }

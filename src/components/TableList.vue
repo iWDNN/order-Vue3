@@ -59,6 +59,12 @@
   <!-- 테이블 정보 보는 사이드바 -->
   <div
     class="showTable-blank">
+    <div class="skeletons fa">
+      <div class="skeleton title"></div>
+      <div class="skeleton order-list"></div>
+      <div class="skeleton request"></div>
+      <div class="skeleton pay"></div>
+    </div>
   </div>
   <Detail />
 </template>
@@ -176,8 +182,28 @@ export default {
 .showTable-blank{
   width:260px;
   height:100%;
-  border-left:2px solid #EEEEEE;
   flex-shrink: 0;
+  
+  // .skeletons{
+  //   flex-direction: column;
+  //   .skeleton{
+  //     background-color:$gray-200;
+  //     border-radius: 10px;
+  //     &.title{
+  //       width:30%;
+  //       height:5%;     
+  //     }
+  //     &.order-list{
+
+  //     }
+  //     &.request{
+
+  //     }
+  //     &.pay{
+
+  //     }
+  //   }
+  // }
 }
 
 </style>

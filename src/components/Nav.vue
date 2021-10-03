@@ -94,6 +94,7 @@ nav{
   background-color:$m2;
   border-right:1px solid lighten($m2,10%);
   border-radius:10px;
+  box-shadow:0 7px 25px rgba(0,0,0,0.08);
   margin:10px 5px;
   transition: 0.3s ease;
   .box{
