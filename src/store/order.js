@@ -27,6 +27,7 @@ export default {
   },
   actions: {
     async getTypeOrders({ state, commit }, payload) {
+      commit('resetOrderList')
       const res = await _fetchOrderList()
       const data = res.data.data.content
       for (let i = 0; i < data.length; i++) { // 테이블 갯수만큼 돌리기
@@ -45,7 +46,7 @@ export default {
       }
     },
 
-    async orderTypeChange(context, payload) {
+    async orderTypeChange({ dispatch }, payload) {
       const actoken = VueCookies.get("accessToken")
       const orders = payload.order
       let config = {
@@ -57,16 +58,15 @@ export default {
       for (let i = 0; i < orders.length; i++) {
         data.ids.push({ id: orders[i].id })
       }
-
       const url = `http://13.124.45.246:8080/orders/${payload.type}`
       await axios.post(url, data, config)
         .then(res => {
           console.log(res)
-          router.go()
         })
         .catch(err => {
           console.log(err)
         })
+      dispatch('getTypeOrders')
     },
     getStatus({ commit }, payload) {
       let count = 0
@@ -91,7 +91,7 @@ export default {
         }
       }
     },
-    async delOrderMenu(context, payload) {
+    async delOrderMenu({ dispatch }, payload) {
       let id = payload
       const actoken = VueCookies.get("accessToken")
       let config = {
@@ -106,6 +106,7 @@ export default {
         .catch(err => {
           console.log(err)
         })
+      dispatch('getTypeOrders')
     }
   }
 }

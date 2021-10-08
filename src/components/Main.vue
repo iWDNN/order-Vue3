@@ -204,7 +204,8 @@ export default {
     
   },
   methods:{
-    logout(){
+    async logout(){
+      await VueCookies.remove("accessToken")
       this.$store.dispatch('login/logOut')
     },
     submitResForm(){
@@ -214,10 +215,8 @@ export default {
         licenseImage:this.licenseImage,
       }
       this.$store.dispatch('restaurant/regRes',data)
-      this.$router.go()
+      
     },
-    test(){
-    }
     
   }
 }
@@ -235,7 +234,7 @@ export default {
         font-family: "Oswald", sans-serif;
         font-weight: 700;
         font-size:25px;
-        color:darken($m6, 2%);
+        color:lighten($m2,20%);
       }
     }
     .box-two{

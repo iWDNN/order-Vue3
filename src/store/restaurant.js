@@ -37,7 +37,7 @@ export default {
       }
     },
     //식당등록
-    regRes(context, payload) {
+    regRes({ dispatch }, payload) {
       const actoken = VueCookies.get("accessToken")
       const url = 'http://13.124.45.246:8080/stores'
       if (actoken) {
@@ -55,6 +55,7 @@ export default {
       } else {
         alert('토큰X')
       }
+      dispatch('getStore')
     },
   }
 }

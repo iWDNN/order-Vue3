@@ -80,10 +80,12 @@
 import TableItem from '~/components/TableItem'
 import Detail from '~/components/Detail'
 import { mapState } from 'vuex' 
-
 export default {
   created(){
     this.$store.dispatch('table/getTableList')
+    // setTimeout(()=>{
+    //   this.$router.go()
+    // },10000)
   },
   data(){
     return{
@@ -123,7 +125,7 @@ export default {
         )
     },
     showTableInfo(){
-      this.$store.commit('status/updateToogle')
+      this.$store.commit('status/updateToggle')
     }
   }
 }

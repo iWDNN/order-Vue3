@@ -74,6 +74,7 @@ export default {
     getTableId(id){
       console.log(id)
       this.$store.dispatch('table/searchTableItem',id)
+      this.$store.commit('status/resetPutToggle')
     },
     checkRequest(orders){
       let count = 0;

@@ -243,55 +243,111 @@ button{
 .scale{
   transform: scale(1.2);
 }
-
 .loading-animation{
   width:100vw;
   height:100vh;
   flex-grow:1;
-  position:absolute;
-  background-color: white;
-  z-index:98; 
-  top:0;
-  .title{
-    position: fixed;
+  background-color: #F0F5FB;
+  position: absolute;
+  z-index:98;
+  animation: fadeOut 2s linear;
+  .ani-wrap{
+    width:30%;
+    height:30%;
     z-index:99;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    margin:auto;
-    font-family: "Oswald", sans-serif;
-    font-weight: 700;
-    font-size:41px;
-    color:lighten($m2, 20%);
+    margin-bottom:30px;
+    position: relative;
+    .title{
+      z-index:100;
+      position: absolute;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size:35px;
+      color:lighten($m2, 20%);
+      animation: bounce 3s infinite ease-in-out;
+    }
+    .bar{
+      position: relative;
+      width:140px;
+      height:5px;
+      border-radius:15px;
+      top:40px;
+      overflow:hidden;
+      .background-bar{
+        position: absolute;
+        width:100%;
+        height:100%;
+        background-color:$gray-400;
+      }
+      .loading-bar{
+        position: absolute;
+        height:100%;
+        background-color:$m2;
+        animation:loadingBar 2s linear;
+      }
+    }
+  }
+}
 
+
+@keyframes fadeOut{
+  0%{
+    opacity:1;
   }
-}
-@keyframes mainLoading{
-  0% {
-    background-color: white;
-    opacity: 1;
+  5%{
+    opacity:1;
   }
-  25%{
-    opacity:0.75;
+  10%{
+    opacity:1;
   }
-  75%{
-    opacity:0.25;
-  }
-  100%{
-    display:none;
-  }
-}
-@keyframes mainLoadingLogo{
-  0% {
-    transfrom:rotate3d(0);
+  20%{
+    opacity:1;
   }
   25%{
-    transfrom:rotate3d(2, -1, -1, -0.2turn);
+    opacity:1;
+  }
+  30%{
+    opacity:1;
+  }
+  50%{
+    opacity:1;
   }
   75%{
-    transform: rotate3d(0, 1, 0.5, 3.142rad);
+    opacity:1;
+  }
+  90%{
+    opacity: 0.9;
   }
   100%{
-    transfrom:rotate3d(0);
+    opacity:0;
+  }
+}
+@keyframes loadingBar{
+  0%{
+    width:0%;
+  }
+  5%{
+    width:5%;
+  }
+  10%{
+    width:10%;
+  }
+  20%{
+    width:20%;
+  }
+  25%{
+    width:25%;
+  }
+  30%{
+    width:30%;
+  }
+  50%{
+    width:50%;
+  }
+  75%{
+    width:75%;
+  }
+  100%{
+    width:100%;
   }
 }

@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import VueCookies from 'vue-cookies'
 import store from '~/store'
 // main
 import Management from './Management'
@@ -34,6 +35,14 @@ export default createRouter({
     {
       path: '/login',
       component: Login,
+      beforeEnter: (to, from, next) => {
+        let actoken = VueCookies.get("accessToken")
+        if (actoken) {
+          next({ path: '/manage/main' })
+        } else {
+          next()
+        }
+      },
     },
     {
       path: '/sign_up',

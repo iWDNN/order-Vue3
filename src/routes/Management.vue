@@ -1,10 +1,18 @@
 <template>
   <div class="wrap">
-    <!-- <div class="loading-animation">
-      <h1 class="title fcc">
-        ORDER
-      </h1>
-    </div> -->
+    <div
+      v-if="animation"
+      class="loading-animation fcc">
+      <div class="ani-wrap fcc">
+        <div class="title">
+          ORDER
+        </div>
+        <div class="bar">
+          <div class="background-bar"></div>
+          <div class="loading-bar"></div>
+        </div>
+      </div>
+    </div>
     <Nav />
     <div class="nav-blank"></div>
     <Router-view />
@@ -15,7 +23,9 @@
 import Nav from '~/components/Nav'
 import { mapState } from 'vuex'
 export default {
-  
+  created(){
+    setTimeout(this.chg, 2000)
+  },
   components:{
     Nav
   },
@@ -23,7 +33,8 @@ export default {
     return{
       name:'',
       description:'',
-      licenseImage:''
+      licenseImage:'',
+      animation:false
     }
   },
   computed:{
@@ -36,7 +47,9 @@ export default {
     ]),
   },
   methods:{
-    
+    chg(){
+      this.animation = false
+    }
   }
   
 }

@@ -744,8 +744,8 @@ $add-menu-width:260px;
   transition:0.2s ease;
   .close-btn{
     img{
-      width:18px;
-      height:18px;
+      width:20px;
+      height:20px;
     }
   }
   h1{

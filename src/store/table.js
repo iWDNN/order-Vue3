@@ -82,6 +82,22 @@ export default {
         alert('토큰X')
       }
       dispatch('getTableList')
+    },
+    // 테이블 초기화
+    async resetTable({ dispatch }, payload) {
+      const actoken = VueCookies.get("accessToken")
+      const url = `http://13.124.45.246:8080/tables/${payload}/init`
+      let config = {
+        'headers': { 'Authorization': `Bearer ${actoken}` }
+      }
+      await axios.post(url, null, config)
+        .then(res => {
+          alert('계산완료')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      dispatch('getTableList')
     }
 
   }

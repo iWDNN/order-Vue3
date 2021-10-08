@@ -12,16 +12,8 @@
         <div class="table-name fa">
           {{ order.name }}
         </div>
-        <button 
-          v-if="orderStatus=='order'"
-          class="change fa"
-          @click="toggle.showDel=!toggle.showDel"
-          :class="{'active':toggle.showDel}">
-          <span>수정</span>
-        </button>
       </div>
       <div class="timer">
-        <span>+ 00:28</span>
       </div>
     </div>
     <div class="info fcc">
@@ -77,7 +69,9 @@
             조리시작
           </button>
           <button
-            @click="cancelOrder('cancel')"
+            v-if="orderStatus=='order'"
+            @click="toggle.showDel=!toggle.showDel"
+            :class="{'active':toggle.showDel}"
             class="btn order-del">
             삭제
           </button>
@@ -90,20 +84,6 @@
             class="btn"
             :class="orderStatus">
             조리완료
-          </button>
-          <button
-            @click="changeStatus('cancel')"
-            class="btn cook-del">
-            삭제
-          </button>
-        </div>
-        <div
-          v-if="orderStatus=='cook_comp'"
-          class="line fcc">
-          <button
-            @click="changeStatus('cancel')"
-            class="btn comp-del">
-            삭제
           </button>
         </div>
       </div>
@@ -203,27 +183,7 @@ export default {
         font-size:20px;
         font-weight: 700;
       }
-      .change{
-        width:50px;
-        height:50%;
-        font-size:16px;
-        margin:6px 0 0 0;
-        padding:0;
-        background-color:$m1;
-        border:none;
-        color:$m5;
-        opacity: 0.7;
-        transition:.2s ease;
-        span{
-          padding:1px;
-        }
-        &.active{
-          span{
-            opacity: 1;
-            border-bottom:2px solid $m5;
-          }
-        }
-      }
+      
     }
     .timer{
       width:58px;
@@ -270,14 +230,14 @@ export default {
             text-align: center;
             padding:8px 0;
             .menu-delete{
-              width:17px;
-              height:17px;
+              width:13px;
+              height:13px;
               background-color:$m1;
               border:none;
               margin-left:5px;
               img{
                 padding-bottom:2px;
-                width:17px;
+                width:13px;
                 height:100%;
               }
             }
@@ -349,6 +309,11 @@ export default {
           border:1px solid $apply;
           background-color:$m5;
           color:$apply;
+          &.active{
+            border:1px solid $m5;
+            background-color:rgba(#FA1414,0.8);
+            color:$m5;
+          }
         }
         .btn.cook-del{
           border:1px solid $cooking;

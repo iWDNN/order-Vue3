@@ -1,5 +1,5 @@
 import { computed } from "vue"
-
+import router from '~/routes'
 export default {
   namespaced: true,
   state: () => ({
@@ -7,7 +7,9 @@ export default {
     collapsed: true,
     navWidth: '50px',
     //toggle
-    detailToggle: false
+    detailToggle: false,
+    putToggle: false,
+
   }),
   getters: '',
   mutations: {
@@ -20,8 +22,18 @@ export default {
       )
       state.navWidth = width
     },
-    updateToogle(state) {
+    updateToggle(state) {
       state.detailToggle = !state.detailToggle
+    },
+    updatePutToggle(state) {
+      state.putToggle = true
+    },
+    resetPutToggle(state) {
+      state.putToggle = false
+    },
+    refreshPage() {
+      router.go()
     }
+
   }
 }

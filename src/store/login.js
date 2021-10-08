@@ -27,7 +27,6 @@ export default {
     logout(state) {
       state.isLogin = false
       state.userInfo = null
-      VueCookies.remove("accessToken")
       // VueCookies.keys().forEach(cookie => this.$cookies.remove(cookie));
     }
   },
@@ -42,10 +41,6 @@ export default {
             VueCookies.set("accessToken", token, "1h")
             commit('loginSuccess')
             router.push('/manage/main')
-            alert(res.data.message)
-            window.addEventListener('DOMContentLoaded', function () {
-              console.log('DOMContentLoaded');
-            })
           } else
             alert(res.data.message)
           // router.push('/manage')

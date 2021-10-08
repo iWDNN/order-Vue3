@@ -26,7 +26,7 @@
           type="submit"></button>
       </form>
       <div class="sub">
-        <button @click="putToggle = true">
+        <button @click="putTable">
           <img
             src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_edit_black_24dp.png"
             alt="" />
@@ -92,14 +92,14 @@ import { mapState } from 'vuex'
 export default {
   data(){
     return{
-      putToggle:false,
       pName:'',
-      pNumberOfPeople:null,
+      pNumberOfPeople:null
     }
   },
   computed:{
   ...mapState('status',[
-      'detailToggle'
+      'detailToggle',
+      'putToggle',
     ]),
     ...mapState('table',[
       'tableInfo'
@@ -109,11 +109,15 @@ export default {
   methods:{
     // 테이블 디테일 호출
     showTableInfo(){
-      this.$store.commit('status/updateToogle')
+      this.$store.commit('status/updateToggle')
+    },
+    resetNamePeople(){
+      this.pName = ''
+      this.pNumberOfPeople = null
     },
     // 테이블 디테일 put
     putTable(){
-      this.putToogle = !this.putToogle
+      this.$store.commit('status/updatePutToggle')
     },
     // 테이블 put 전송
     async submitPutTable(id){
@@ -124,16 +128,19 @@ export default {
           numberOfPeople:this.pNumberOfPeople
         }
       }
-      await this.$store.dispatch('table/putTableInfo',data) 
-      this.$router.go()
+      await this.$store.dispatch('table/putTableInfo',data)
+        .then(this.$store.commit('status/updateToggle'))
+        .then(this.resetNamePeople)
+      
     },
     async payComp(type){
       const data = {
+        table: this.tableInfo.id,
         order: this.tableInfo.orders,
         type:type
       }
       await this.$store.dispatch('order/orderTypeChange',data)
-      this.$router.go()
+      this.$store.dispatch('table/resetTable',data.table)
     }
 
   }
@@ -181,6 +188,7 @@ export default {
         outline:none;
         padding:0;
         margin:0;
+        color:$cooking;
       }
       input::placeholder{
         font-weight: 500;
