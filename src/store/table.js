@@ -22,8 +22,12 @@ export default {
     // 테이블 조회
     async getTableList({ commit }) {
       const res = await _fetchTableList()
-      console.log(res.data)
-      commit('updateTableList', res.data.data.content)
+      console.log(res.data.data.content)
+      if (res.status == 200) {
+        commit('updateTableList', res.data.data.content)
+      } else {
+        alert('데이터를 얻어오지 못했습니다')
+      }
     },
     // 테이블 아이디 값으로 찾기
     async searchTableItem({ commit }, payload) {
@@ -84,7 +88,7 @@ export default {
 }
 function _fetchTableList(type) { // 나중에 페이지 사이즈 담기
   const actoken = VueCookies.get("accessToken")
-  const url = 'http://13.124.45.246:8080/tables?page=0&size=10'
+  const url = 'http://13.124.45.246:8080/tables?page=0&size=20'
   return new Promise((resolve, reject) => {
     if (actoken) {
       let config = {

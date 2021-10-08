@@ -37,15 +37,20 @@
       <h2>
         <span>주문 내역</span>
       </h2>
-      <table>
+      <table
+        v-if="tableInfo.orders">
         <tr>
           <th>상품명</th>
           <th>수량</th>
           <th>금액</th>
+        </tr> 
+        <tr
+          v-for="menu in tableInfo.orders"
+          :key="menu.id">
+          <td>{{ menu.name }}</td>
+          <td>{{ menu.count }}</td>
+          <td>{{ menu.orderPrice }}</td>
         </tr>
-        <OrderMenuItem />
-        <OrderMenuItem />
-        <OrderMenuItem />
       </table>
     </div>
     <div class="request">
@@ -54,7 +59,9 @@
       </h2>
       <div class="rq-info fj">
         <div class="box">
-          <span>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</span>
+          <span
+            v-for="menu in tableInfo.orders"
+            :key="menu.id">{{ menu.request }}</span>
         </div>
       </div>
     </div>
@@ -62,18 +69,24 @@
       <h2 class="label fa">
         <span>합계</span>
       </h2>
-      <h2 class="sum fcc">
-        50,900
+      <h2
+        v-if="tableInfo.orders"
+        class="sum fcc">
+        {{ tableInfo.totalPrice }}
       </h2>
     </div>
-    <!-- <div class="pay fcc">
-      <button>결제</button>
-    </div>  -->
+    <div class="pay fcc">
+      <button
+        @click="payComp('comp')"
+        class="btn">
+        계산 완료
+      </button>
+    </div> 
   </div>
 </template>
 
 <script>
-import OrderMenuItem from '~/components/OrderMenuItem'
+
 import { mapState } from 'vuex' 
 
 export default {
@@ -92,9 +105,7 @@ export default {
       'tableInfo'
     ]),
   },
-  components:{
-    OrderMenuItem
-  },
+  
   methods:{
     // 테이블 디테일 호출
     showTableInfo(){
@@ -114,6 +125,14 @@ export default {
         }
       }
       await this.$store.dispatch('table/putTableInfo',data) 
+      this.$router.go()
+    },
+    async payComp(type){
+      const data = {
+        order: this.tableInfo.orders,
+        type:type
+      }
+      await this.$store.dispatch('order/orderTypeChange',data)
       this.$router.go()
     }
 
@@ -213,7 +232,20 @@ export default {
           text-align: center;
           border-bottom: 1px solid #EEEEEE;
           th{
+            font-size:13px;
+            padding-top:2px;
             padding-bottom:10px;
+          }
+        }
+        tr{
+          font-size:12px;
+          td:first-child{
+            padding-left:5px;
+            text-align: start;
+          }
+          td{
+            text-align: center;
+            padding:8px 0;
           }
         }
       }
@@ -239,16 +271,18 @@ export default {
         word-break: break-all;
         overflow: auto;
         opacity: 0.6;
-        span{
-          font-size:14px;
-          font-weight: 300;
+        span:first-child{
+          font-size:12px;
+        }
+        span:not(:first-of-type){
+          display:none;
         }
       }
     }
   }
   .account{
     display:flex;
-    height:10%;
+    height:4%;
     .label{
       width:50%;
       box-sizing: border-box;
@@ -265,7 +299,8 @@ export default {
     width:100%;
     height:10%;
     button{
-
+      width:80%;
+      border-radius: 10px;
     }
   }
 }

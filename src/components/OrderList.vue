@@ -5,27 +5,30 @@
     <header class="header">
       <div class="o-nav">
         <div class="order-status">
-          주문접수<span> 6 </span>건
+          주문목록<span>{{ orderList.length }}</span>건
         </div>
-        <button class="apply">
-          접수
+        <button
+          @click="getTypeList('ORDER')"
+          class="apply">
+          접수대기
         </button>
-        <button class="cooking">
+        <button 
+          @click="getTypeList('COOK')"
+          class="cooking">
           조리중
         </button>
-        <button class="complete">
+        <button 
+          @click="getTypeList('COOK_COMP')"
+          class="complete">
           조리완료
         </button>
       </div>
     </header>
     <section class="section no-wrap">
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
+      <OrderItem
+        v-for="order in orderList"
+        :key="order.id"
+        :order="order" />
     </section>
   </div>
 </template>
@@ -34,6 +37,9 @@
 import OrderItem from '~/components/OrderItem'
 import { mapState } from 'vuex'
 export default {
+  created(){
+    this.$store.dispatch('order/getTypeOrders','ORDER')
+  },
   components:{
     OrderItem
   },
@@ -41,8 +47,17 @@ export default {
     ...mapState('status',[
       'collapsed',
       'navWidth',
+    ]),
+    ...mapState('order',[
+      'orderList'
     ])
   },
+  methods:{
+    async getTypeList(orderList){
+      await this.$store.commit('order/resetOrderList')
+      this.$store.dispatch('order/getTypeOrders',orderList)
+    }
+  }
 }
 </script>
 
@@ -65,8 +80,9 @@ export default {
         display: flex;
         align-items: center;
         span{
-          padding:0 5px;
-          font-size:20px;
+          font-weight: 600;
+          padding:0 5px 0 5px;
+          font-size:23px;
         }
       }
       .apply{
@@ -85,7 +101,6 @@ export default {
   .no-wrap{
   flex-wrap:nowrap;
   overflow: auto;
-
-}
+  }
 }
 </style>

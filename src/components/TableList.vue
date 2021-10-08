@@ -3,7 +3,7 @@
     class="container"
     :style="{ 'margin-left': navWidth}">
     <header class="header fa">
-      <div class="add-table">
+      <div class="add-table fa">
         <button
           @click="showTableAdd"
           class="btn fcc">
@@ -12,6 +12,13 @@
             alt="" />
           <span>테이블 추가</span>
         </button>
+        <!-- <button
+          class="btn fcc">
+          <img
+            src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_delete_black_24dp.png"
+            alt="" />
+          <span>테이블 삭제</span>
+        </button> -->
       </div>
     </header>
     <section class="section">
@@ -127,9 +134,10 @@ export default {
   .header{
     justify-content: flex-end;
     .add-table{
-      width:160px;
       .btn{
         width:90%;
+        margin-right:20px;
+        padding:0 20px;
         img{
           width:20px;
           height:20px;

@@ -79,7 +79,7 @@
               <img
                 src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_delete_black_24dp.png"
                 alt="" />
-              <span>카테고리 제거</span>
+              <span>카테고리 삭제</span>
             </button>
             <div class="line fa">
               <span>메뉴</span>
@@ -110,7 +110,7 @@
       <!-- 메뉴 수정 alert box -->
       <div class="alert fa">
         <div
-          v-if="mnChangeAlert"
+          v-if="mnChangeAlert || mnDeleteAlert"
           class="alert-box fa">
           해당 항목을 선택
           <img
@@ -128,6 +128,7 @@
         :key="info.id"
         :info="info" />
     </section>
+    <!-- 메뉴 사이드바 토글 -->
     <button
       @click="addToggle"
       v-if="!toggle"
@@ -144,7 +145,9 @@
       <button
         class="close-btn"
         @click="resetModal">
-        X
+        <img
+          src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_clear_black_24dp.png"
+          alt="" />
       </button>
       <h1>메뉴 추가</h1>
       <div
@@ -185,7 +188,7 @@
         </div>
         <div class="line">
           <label for="menu-desc">
-            <span>카테고리</span>
+            <span>카테고리 선택</span>
           </label>
           <label></label>
         </div>
@@ -439,6 +442,7 @@ export default {
       'sectionMenu',
       'mnChangeAlert',
       'mnChangeId',
+      'mnDeleteAlert',
       'mnDeleteId',
       'mnDeleteName'
     ]),
@@ -623,13 +627,16 @@ export default {
           position:absolute;
           top:30px;
           right:20px;
-          background-color:$m2;
+          background-color:lighten($m2,5%);
           border-radius:10px;
           padding:0 5px;
           padding-bottom:5px;
           .line{
             height:20px;
             padding:2px 0;
+            &:first-child{
+              padding-top:5px;
+            }
             span{
               padding-left:5px;
               font-size:12px;
@@ -670,6 +677,7 @@ export default {
         display:flex;
         justify-content: center;
         align-items:center;
+        flex-direction: column;
         h1{
           font-size:18px;
         }
@@ -734,7 +742,12 @@ $add-menu-width:260px;
   padding:20px;
   box-sizing: border-box;
   transition:0.2s ease;
-  // .add-close-btn{}
+  .close-btn{
+    img{
+      width:18px;
+      height:18px;
+    }
+  }
   h1{
     display: block;
     margin:0;
@@ -749,6 +762,8 @@ $add-menu-width:260px;
       margin:10px 0;
       width:220px;
       height:180px;
+      border-radius:15px;
+      overflow:hidden;
       background-color:#EBEBEB;
       background-size:cover;
       background-position: center;
@@ -768,6 +783,7 @@ $add-menu-width:260px;
         width:60%;
         outline:none;
         border:none;
+        border-radius:15px;
         background-color:#EBEBEB;
       }
       &:nth-child(6){
@@ -793,11 +809,13 @@ $add-menu-width:260px;
             margin:0;
             .line-link{
               width:100%;
-              color:$m4;
+              color:$gray-500;
               border:1px solid $m5;
               background-color:$m5;
+              transition: .2s;
               &:focus{
                 border:1px solid $m4;
+                color:$m4;
               }
               span{
                 display:block;

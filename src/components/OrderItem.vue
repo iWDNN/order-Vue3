@@ -1,16 +1,24 @@
 <template>
-  <div class="order">
-    <div class="title">
+  <div class="orders">
+    <div
+      class="title"
+      :class="orderStatus">
       <div class="status fcc">
-        <span>접수</span>
+        <span v-if="orderStatus=='order'">주문</span>
+        <span v-if="orderStatus=='cook'">조리중</span>
+        <span v-if="orderStatus=='cook_comp'">조리<br />완료</span>
       </div>
       <div class="name">
         <div class="table-name fa">
-          테이블 1
+          {{ order.name }}
         </div>
-        <div class="change fa">
-          수정
-        </div>
+        <button 
+          v-if="orderStatus=='order'"
+          class="change fa"
+          @click="toggle.showDel=!toggle.showDel"
+          :class="{'active':toggle.showDel}">
+          <span>수정</span>
+        </button>
       </div>
       <div class="timer">
         <span>+ 00:28</span>
@@ -23,45 +31,129 @@
             <th>상품명</th>
             <th>수량</th>
             <!-- <th></th> -->
-          </tr> 
-          <OrderMenuItem />
-          <OrderMenuItem />
-          <OrderMenuItem />
-          <OrderMenuItem />
-          <OrderMenuItem />
-          <OrderMenuItem />
-          <OrderMenuItem />
+          </tr>
+          <tr
+            v-for="item in order.orders"
+            :key="item.id">
+            <td
+              class="fa">
+              {{ item.name }}
+              <button
+                v-show="toggle.showDel"
+                @click="menuDelete(item.id)"
+                class="menu-delete fcc">
+                <img
+                  src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_clear_red_24dp.png"
+                  alt="" />
+              </button>
+            </td>
+            <td>{{ item.count }}</td>
+            <!-- <td>hi</td> -->
+          </tr>
         </table>
       </div>
       <div class="request">
         <div class="rq-title fa">
           <span>요청사항</span>
         </div>
-        <div class="rq-info fj">
+        <div class="rq-info fcc">
           <div class="box">
-            <span>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</span>
+            <span class="content"> 
+              <span
+                v-for="rq in order.orders"
+                :key="rq.id">{{ rq.request }}</span>
+            </span>
           </div>
         </div>
       </div>
-      <div class="btns">
-        <div class="btn fcc">
-          <button>삭제</button>
-          <button>조리시작</button>
+      <div class="btns fa">
+        <div
+          v-if="orderStatus=='order'"
+          class="line fa">
+          <button
+            @click="changeStatus('cook')"
+            class="btn"
+            :class="orderStatus">
+            조리시작
+          </button>
+          <button
+            @click="cancelOrder('cancel')"
+            class="btn order-del">
+            삭제
+          </button>
+        </div>
+        <div
+          v-if="orderStatus=='cook'"
+          class="line fa">
+          <button
+            @click="changeStatus('cook_comp')"
+            class="btn"
+            :class="orderStatus">
+            조리완료
+          </button>
+          <button
+            @click="changeStatus('cancel')"
+            class="btn cook-del">
+            삭제
+          </button>
+        </div>
+        <div
+          v-if="orderStatus=='cook_comp'"
+          class="line fcc">
+          <button
+            @click="changeStatus('cancel')"
+            class="btn comp-del">
+            삭제
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import OrderMenuItem from '~/components/OrderMenuItem'
+import { mapState } from 'vuex'
 export default {
-  components:{
-    OrderMenuItem
+  created(){
+    this.$store.dispatch('order/getStatus',this.order.orders)
+  },
+  props:{
+    order:{
+      type:Object,
+      default:()=>({})
+    }
+  },
+  data(){
+    return{
+      request:{
+      },
+      result:[],
+      toggle:{
+        showDel:false
+      }
+    }
+  },
+  computed:{
+    ...mapState('order',[
+      'orderStatus'
+    ])
+  },
+  methods:{
+    changeStatus(type){
+      const data = {
+        order: this.order.orders,
+        type:type
+      }
+      this.$store.dispatch('order/orderTypeChange',data)
+    },
+    menuDelete(orders){
+      const data = orders
+      this.$store.dispatch('order/delOrderMenu',data)
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-.order{
+.orders{
   width:380px;
   height:600px;
   display:flex;
@@ -76,10 +168,17 @@ export default {
   .title{
     display:flex;
     height:18%;
-    background-color:rgba(#14A0FA,0.72);
+    // background-color:rgba(#14A0FA,0.72);
+    background-color:$apply;
     padding: 10px 30px;
     box-sizing: border-box;
     color:white;
+    &.cook{
+      background-color:$cooking;
+    }
+    &.cook_comp{
+      background-color:$gray-400;
+    }
     .status{
       width:60px;
       height:60px;
@@ -105,10 +204,25 @@ export default {
         font-weight: 700;
       }
       .change{
+        width:50px;
         height:50%;
         font-size:16px;
-        padding-top:6px;
+        margin:6px 0 0 0;
+        padding:0;
+        background-color:$m1;
+        border:none;
+        color:$m5;
         opacity: 0.7;
+        transition:.2s ease;
+        span{
+          padding:1px;
+        }
+        &.active{
+          span{
+            opacity: 1;
+            border-bottom:2px solid $m5;
+          }
+        }
       }
     }
     .timer{
@@ -146,34 +260,61 @@ export default {
             padding-bottom:10px;
           }
         }
+        tr{
+          font-size:12px;
+          td:first-child{
+            padding-left:5px;
+            text-align: start;
+          }
+          td{
+            text-align: center;
+            padding:8px 0;
+            .menu-delete{
+              width:17px;
+              height:17px;
+              background-color:$m1;
+              border:none;
+              margin-left:5px;
+              img{
+                padding-bottom:2px;
+                width:17px;
+                height:100%;
+              }
+            }
+          }
+        }
       }
     }
     .request{
       width:303px;
-      height:25%;
+      height:108px;
       .rq-title{
-        height:30%;
+        height:38px;
         span{
-          padding-left:10px;
+          margin-left:10px;
           font-size:15px;
           border-bottom: 1px solid black;
         }
       }
       .rq-info{
-        height:90%;
+        height:68px;
         box-sizing: border-box;
         .box{
           width:100%;
-          height:60%;
+          height:60px;
           background-color:#EEEEEE;
-          padding:15px 11px;
+          padding:5px;
           box-sizing: border-box;
           word-break:break-all;
           overflow:auto;
           opacity: 0.6;
-          span{
-            font-size:14px;
-            font-weight: 300;
+          .content{          
+            span:first-child{
+              font-size:13px;
+            }
+            span:not(:first-of-type){
+              display:none;
+            }
           }
         }
       }
@@ -181,24 +322,43 @@ export default {
     .btns{
       width:100%;
       height:10%;
-      .btn{
-        display:flex;
+      margin:10px 0;
+      justify-content: space-between;
+      .line{
+        width:100%;
+        height:100%;
+        margin:10px 0;
         justify-content: space-between;
-        align-items: center;
-        button{
-          outline:none;
-          width:140px;
+        .btn{
+          border-radius: 10px;
           height:45px;
+          font-size:13px;
+          font-weight: 700;
+          &.order{
+            border:1px solid $m5;
+            background-color:$apply;
+            color:$m5;
+          }
+          &.cook{
+            border:1px solid $m5;
+            background-color:$cooking;
+            color:$m5;
+          }
         }
-        button:first-child{
-          background-color:white;
-          border:1px solid #14A0FA;
-          color:#14A0FA;
+        .btn.order-del{
+          border:1px solid $apply;
+          background-color:$m5;
+          color:$apply;
         }
-        button:last-child{
-          background-color:#14A0FA;
-          border:1px solid white;
-          color:white;
+        .btn.cook-del{
+          border:1px solid $cooking;
+          background-color:$m5;
+          color:$cooking;
+        }
+        .btn.comp-del{
+          border:1px solid $gray-400;
+          background-color:$m5;
+          color:$gray-400;
         }
       }
     }

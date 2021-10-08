@@ -1,7 +1,9 @@
 <template>
   <nav
     :style="{ width: navWidth}">
-    <div class="box">
+    <div
+      class="box"
+      :class="{ 'none' : !(store.storeStatus == 'VALID')}">
       <div
         v-for="nav in navigation"
         :key="nav.name"
@@ -17,7 +19,7 @@
                 alt="nav-icon" />
             </Router-link>
           </div>
-          <div class="link-box">
+          <div class="link-box fcc">
             <Router-link
               v-if="!collapsed" 
               class="link fcc" 
@@ -43,6 +45,9 @@
 import { mapState } from 'vuex'
 
 export default {
+  created(){
+    this.$store.dispatch('restaurant/getStore')
+  },
   data(){
     return{
       navigation:[
@@ -73,6 +78,9 @@ export default {
     ...mapState('status',[
       'collapsed',
       'navWidth'
+    ]),
+    ...mapState('restaurant',[
+      'store'
     ])
   },
   methods:{
@@ -103,6 +111,11 @@ nav{
     flex-direction: column;
     align-items: center;
     position:relative;
+    &.none{
+      .item:not(:first-of-type){
+        display: none;
+      }
+    }
     .item{
       flex-direction: column;
       width:100%;
@@ -127,7 +140,6 @@ nav{
               border-right:1px solid darken($m2,5%);
               border-bottom:1px solid darken($m2,5%);
               border-radius:10px;
-              color:$primary;
             }
             img{
               width:20px;
@@ -141,10 +153,12 @@ nav{
         }
         .link-box{
           width:80px;
+          height:100%;
           .link{
             font-size:12px;
             text-decoration: none;
             color:$m5;
+            padding-bottom:2px;
             padding-left:20px;
           }
         }

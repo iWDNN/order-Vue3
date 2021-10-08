@@ -54,7 +54,7 @@
 <script>
 export default {
   created(){
-    this.$store.dispatch('login/getMemberInfo')
+    this.$store.dispatch('login/getLogin')
   },
   data(){
     return{

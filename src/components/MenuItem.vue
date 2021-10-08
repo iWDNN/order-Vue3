@@ -86,20 +86,21 @@ export default {
       display: flex;
       align-items: center;
       font-size:12px;
-      height:33.33333%;
+      padding:5px 0;
       span{
         padding:0 10px;
       }
     }
     .name{
       justify-content: flex-start;
+      font-size:13px;
       font-weight: 700;
     }
     .desc{
-      justify-content: center;
+      
     }
     .price{
-      justify-content: flex-end;
+      
     }
   }
 }

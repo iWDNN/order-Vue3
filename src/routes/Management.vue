@@ -1,53 +1,13 @@
 <template>
   <div class="wrap">
+    <!-- <div class="loading-animation">
+      <h1 class="title fcc">
+        ORDER
+      </h1>
+    </div> -->
     <Nav />
     <div class="nav-blank"></div>
     <Router-view />
-
-
-    <!-- 테이블 조회 모달 -->
-    <div
-      v-if="!store"
-      class="modal-background">
-    </div>
-    <div 
-      v-if="!store"
-      class="modal fcc">
-      <div class="box fcc">
-        <div class="title fcc">
-          <h1>식당 등록</h1>
-          <h2>
-            식당 등록 해야 이용 가능
-          </h2>
-        </div>
-        <form
-          class="fcc"
-          @submit.prevent="submitResForm">
-          <input
-            v-model="name"
-            placeholder="식당명"
-            type="text" />
-          <input
-            v-model="description"
-            placeholder="설명"
-            type="text" />
-          <input
-            v-model="licenseImage"
-            placeholder="사업자등록증"
-            type="text" />
-          <button
-            class="reg-btn"
-            type="submit">
-            등록
-          </button>
-        </form>
-        <button
-          class="btn abs"
-          @click="logout">
-          뒤로가기
-        </button>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -55,9 +15,7 @@
 import Nav from '~/components/Nav'
 import { mapState } from 'vuex'
 export default {
-  created(){
-    this.$store.dispatch('restaurant/getStore')
-  },
+  
   components:{
     Nav
   },
@@ -78,17 +36,7 @@ export default {
     ]),
   },
   methods:{
-    submitResForm(){
-      const data = {
-        name:this.name,
-        description:this.description,
-        licenseImage:this.licenseImage,
-      }
-      this.$store.dispatch('restaurant/regRes',data)
-    },
-    logout(){
-      this.$store.dispatch('login/logOut')
-    }
+    
   }
   
 }

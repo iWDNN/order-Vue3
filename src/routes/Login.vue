@@ -44,9 +44,6 @@ export default {
       password:''
     }
   },
-  // creadted(){
-  //   this.$store.dispatch('login/getMemberInfo')
-  // },
   methods:{
     submitForm(){
       const data = {
@@ -92,6 +89,7 @@ export default {
       font-weight: 700;
       font-size:41px;
       color:lighten($m2, 20%);
+      // color:$m6;
     }
     form{
       width:60%;
