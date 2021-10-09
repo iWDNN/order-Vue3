@@ -29,7 +29,7 @@
       <!-- <div class="timer">00:01</div> -->
     </div>
     <div class="info">
-      <div class="menu-list fj">
+      <div class="menu-list fa">
         <div
           v-for="menu in table.orders"
           :key="menu.id"
@@ -165,14 +165,14 @@ export default {
     padding:5px 0;
     .menu-list{
       width:100%;
-      height:100%;
       padding:0 7px;
       overflow:auto;
-      flex-direction: column;
       flex-wrap:wrap;
       .menu-item{
+        display:flex;
         padding:3px 0;
         width:50%;
+        height:12px;
         .name{
           font-weight:600;
           text-align:start;

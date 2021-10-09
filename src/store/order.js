@@ -7,15 +7,15 @@ export default {
   namespaced: true,
   state: () => ({
     orderList: [],
-    orderStatus: ''
+    orderStatus: '',
   }),
   getters: '',
   mutations: {
     updateOrderList(state, payload) {
       state.orderList = payload
     },
-    updateOrderReq(state, payload) {
-      state.orderReq = payload
+    resetOrderItem(state) {
+      state.orderList.orders = null
     },
     resetOrderList(state) {
       state.orderList = []
@@ -31,8 +31,10 @@ export default {
       const res = await _fetchOrderList()
       const data = res.data.data.content
       for (let i = 0; i < data.length; i++) { // 테이블 갯수만큼 돌리기
-        if (data[i].orders.length !== 0) { // 주문이 들어있는 테이블로 나누기
+        if (data[i].orders.length !== 0) { // 주문이 들어있는 테이블로 
           let count = 0
+
+          console.log(state.orderList)
           for (let j = 0; j < data[i].orders.length; j++) { // 테이블 안의 주문수만큼 돌리기
             if (data[i].orders[j].orderStatus == payload) { // 테이블 안의 주문상태가 페이로드와 일치하는지 나누기
               count = count + 1
@@ -68,6 +70,7 @@ export default {
         })
       dispatch('getTypeOrders')
     },
+
     getStatus({ commit }, payload) {
       let count = 0
       for (let i = 0; i < payload.length; i++) {

@@ -68,11 +68,19 @@ export default {
       display:flex;
       align-items: center;
       button{
+        height:100%;
         margin:0 20px;
         border:none;
         outline:none;
         font-size:12px;
         background-color:transparent;
+        &:hover{
+          border-bottom:2px solid $m4;
+        }
+        &:focus{
+          font-weight:700;
+          border-bottom:2px solid $m4;
+        }
       }
       .order-status{
         margin: 0 50px;

@@ -13,7 +13,9 @@
         <span>{{ info.description }}</span>
       </div>
       <div class="price">
-        <span>{{ info.price }} 원</span>
+        <div class="price-wrap fcc">
+          <span>{{ info.price }} 원</span>
+        </div>
       </div>
     </div>
   </div>
@@ -86,21 +88,29 @@ export default {
       display: flex;
       align-items: center;
       font-size:12px;
-      padding:5px 0;
-      span{
-        padding:0 10px;
-      }
+      padding:0 10px;
+      
     }
     .name{
       justify-content: flex-start;
       font-size:13px;
       font-weight: 700;
+      margin-bottom:5px;
     }
     .desc{
-      
+      margin-bottom:5px;
     }
     .price{
-      
+      width:93%;
+      // justify-content: flex-end;
+      .price-wrap{
+        padding:4px 5px 4px 5px;
+        border-radius: 15px;
+        background-color:lighten($m2,10%);
+        span{
+          color:$m5;
+        }
+      }
     }
   }
 }
