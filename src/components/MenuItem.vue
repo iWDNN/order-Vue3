@@ -14,7 +14,7 @@
       </div>
       <div class="price">
         <div class="price-wrap fcc">
-          <span>{{ info.price }} 원</span>
+          <span>{{ numberWithCommas(info.price) }} 원</span>
         </div>
       </div>
     </div>
@@ -43,7 +43,10 @@ export default {
     ]),
   },
   methods:{
-     getId(info){
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    getId(info){
       if(this.mnChangeAlert){
         this.$store.commit('menu/updateChangeId',info.id)
       } else if(this.mnDeleteAlert){
@@ -87,18 +90,18 @@ export default {
     div{
       display: flex;
       align-items: center;
-      font-size:12px;
+      font-size:11px;
       padding:0 10px;
       
     }
     .name{
       justify-content: flex-start;
-      font-size:13px;
+      font-size:12px;
       font-weight: 700;
-      margin-bottom:5px;
+      margin-bottom:0.5em;
     }
     .desc{
-      margin-bottom:5px;
+      margin-bottom:9px;
     }
     .price{
       width:93%;

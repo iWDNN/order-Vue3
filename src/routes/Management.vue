@@ -1,11 +1,13 @@
 <template>
   <div class="wrap">
     <div
-      v-if="animation"
+      v-if="loading"
       class="loading-animation fcc">
       <div class="ani-wrap fcc">
         <div class="title">
-          ORDER
+          <img
+            src="https://raw.githubusercontent.com/iWDNN/temp/master/logo_1.png"
+            alt="" />
         </div>
         <div class="bar">
           <div class="background-bar"></div>
@@ -23,9 +25,6 @@
 import Nav from '~/components/Nav'
 import { mapState } from 'vuex'
 export default {
-  created(){
-    setTimeout(this.chg, 2000)
-  },
   components:{
     Nav
   },
@@ -34,7 +33,6 @@ export default {
       name:'',
       description:'',
       licenseImage:'',
-      animation:false
     }
   },
   computed:{
@@ -45,11 +43,11 @@ export default {
     ...mapState('restaurant',[
       'store'
     ]),
+    ...mapState('login',[
+      'loading'
+    ]),
   },
   methods:{
-    chg(){
-      this.animation = false
-    }
   }
   
 }

@@ -64,7 +64,7 @@
             <img
               src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_smartphone_black_24dp%20(1).png"
               alt="" />
-            <span>+82 () {{ userInfo.phoneNum }}</span>
+            <span>+82 () {{ rPhoneNum }}</span>
           </div>
         </div>
       </div>
@@ -180,14 +180,15 @@ import VueCookies from 'vue-cookies'
 import { mapState } from 'vuex'
 export default {
   created(){
-    this.$store.dispatch('login/getMemberInfo')
+    this.$store.dispatch('login/getMemberInfo').then(this.phoneNums)  
     this.$store.dispatch('restaurant/getStore')
   },
   data(){
     return{
       name:'',
       description:'',
-      licenseImage:''
+      licenseImage:'',
+      rPhoneNum:''
     }
   },
   computed:{
@@ -215,9 +216,11 @@ export default {
         licenseImage:this.licenseImage,
       }
       this.$store.dispatch('restaurant/regRes',data)
-      
     },
-    
+    phoneNums(){
+      let data = this.userInfo.phoneNum
+      this.rPhoneNum = data.replace(/(\d{3})(\d{3})(\d{3})/,'$1-$2-$3')
+    }
   }
 }
 </script>
@@ -231,25 +234,32 @@ export default {
     .box-one{
       width:50%;
       .title{
+        padding-top:10px;
+        padding-left:15px;
         font-family: "Oswald", sans-serif;
         font-weight: 700;
         font-size:25px;
         color:lighten($m2,20%);
+        // color:$s-logo;
       }
     }
     .box-two{
       width:50%;
       justify-content: flex-end;
       .main-btn{
-        width:100px;
+        width:80px;
         height:30px;
         border:none;
-        background-color:darken(#F0F5FB,3%);
-        border-radius:15px;
+        background-color:$gray-200;
+        border-radius:10px;
         box-shadow:0 7px 25px rgba(0,0,0,0.08);
+        transition: .2s;
         span{
           color:lighten($m4,50%);
           font-size:12px;
+        }
+        &:hover{
+          background-color:$gray-300;
         }
       }
     }

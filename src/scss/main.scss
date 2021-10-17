@@ -5,9 +5,9 @@ $m3:#94b1e6;
 $m4:black;
 $m5:white;
 $m6:#FFE500;
-$apply:#0082c6;
+$apply:#3ea4fa;
 $cooking:#fd9333;
-
+$s-logo:#E3698A;
 
 
 // Required
@@ -22,8 +22,10 @@ $cooking:#fd9333;
   display:flex;
   z-index:97;
   width:100vw; 
-  height:1000vh;
+  height:100vh;
   background-color:#F0F5FB;
+  font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: -0.25px;
 }
 .container{
   display: flex;
@@ -56,6 +58,7 @@ $cooking:#fd9333;
   flex-wrap:wrap;
   align-content:flex-start;
   margin-left:1px;
+  margin-bottom:10px;
   border-radius:12px;
   background-color:$m5;
   box-shadow:0 7px 25px rgba(0,0,0,0.08);
@@ -243,11 +246,14 @@ button{
 .scale{
   transform: scale(1.2);
 }
+
+//loading
 .loading-animation{
   width:100vw;
   height:100vh;
   flex-grow:1;
-  background-color: #F0F5FB;
+  background-color: $m2;
+  // background-color: #F0F5FB;
   position: absolute;
   z-index:98;
   animation: fadeOut 2s linear;
@@ -264,25 +270,29 @@ button{
       font-weight: 700;
       font-size:35px;
       color:lighten($m2, 20%);
-      animation: bounce 3s infinite ease-in-out;
+      animation: fadeInDown 2s ease;
+      img{
+        width:150px;
+        height:150px;
+      }
     }
     .bar{
       position: relative;
-      width:140px;
+      width:150px;
       height:5px;
       border-radius:15px;
-      top:40px;
+      top:70px;
       overflow:hidden;
       .background-bar{
         position: absolute;
         width:100%;
         height:100%;
-        background-color:$gray-400;
+        background-color:$m2;
       }
       .loading-bar{
         position: absolute;
         height:100%;
-        background-color:$m2;
+        background-color:$gray-400;
         animation:loadingBar 2s linear;
       }
     }
@@ -349,5 +359,36 @@ button{
   }
   100%{
     width:100%;
+  }
+}
+@keyframes fadeInDown{
+  0%{
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  // 5%{
+  //   top:-25px;
+  // }
+  // 10%{
+  //   top:-20px;
+  // }
+  // 20%{
+  //   top:-15px;
+  // }
+  // 25%{
+  //   transform: translateY(-75px);
+  // }
+  // // 30%{
+  // //   transform: translateY(-50px);
+  // // }
+  50%{
+    opacity: 0.5;
+  }
+  // 75%{
+  //   transform: translateY(-25px);
+  // }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
   }
 }

@@ -573,6 +573,7 @@ export default {
       const data = {
         itemsId:this.mnDeleteId
       }
+      console.log(data)
       await this.$store.dispatch('menu/delMenuItem',data)
       this.$store.commit('menu/resetAlert')
       this.resetModal()
@@ -813,8 +814,12 @@ $add-menu-width:260px;
               border:1px solid $m5;
               background-color:$m5;
               transition: .2s;
+              padding:6px 0 4px 0;
               &:focus{
                 border:1px solid $m4;
+                color:$m4;
+              }
+              &:hover{
                 color:$m4;
               }
               span{

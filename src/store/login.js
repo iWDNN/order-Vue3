@@ -7,7 +7,8 @@ export default {
   namespaced: true,
   state: () => ({
     isLogin: false,
-    userInfo: {}
+    userInfo: {},
+    loading: false
   }),
   getters: {
     getisLogin(state) {
@@ -28,6 +29,9 @@ export default {
       state.isLogin = false
       state.userInfo = null
       // VueCookies.keys().forEach(cookie => this.$cookies.remove(cookie));
+    },
+    updateLoading(state, payload) {
+      state.loading = payload
     }
   },
   actions: {

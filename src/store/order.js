@@ -2,17 +2,22 @@ import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import router from '~/routes/index.js'
 import store from '~/store/index.js'
+import _uniqBy from 'lodash/uniqBy'
 
 export default {
   namespaced: true,
   state: () => ({
     orderList: [],
     orderStatus: '',
+    orderItem: []
   }),
   getters: '',
   mutations: {
     updateOrderList(state, payload) {
       state.orderList = payload
+    },
+    updateOrderItem(state, payload) {
+      state.orderItem = payload
     },
     resetOrderItem(state) {
       state.orderList.orders = null
@@ -31,22 +36,27 @@ export default {
       const res = await _fetchOrderList()
       const data = res.data.data.content
       for (let i = 0; i < data.length; i++) { // 테이블 갯수만큼 돌리기
+        let tempArr = []
         if (data[i].orders.length !== 0) { // 주문이 들어있는 테이블로 
-          let count = 0
-
-          console.log(state.orderList)
           for (let j = 0; j < data[i].orders.length; j++) { // 테이블 안의 주문수만큼 돌리기
             if (data[i].orders[j].orderStatus == payload) { // 테이블 안의 주문상태가 페이로드와 일치하는지 나누기
-              count = count + 1
-              if (count == (data[i].orders.length)) { // 그 주문의 길이와 카운트가 일치할때
-                console.log('?')
-                commit('updateOrderList', [...state.orderList, data[i]]) // 그 테이블의 상태를 페이로드타입이라 판단하여 그 테이블의 주문만 넘기기
-              }
+              tempArr = [...tempArr, data[i]] // 주문이 payload와 같은 테이블을 임시배열에 저장
             }
+          }
+
+          if (tempArr.length !== 0) { // payload와 다른 빈 테이블의 값 넘기기
+            let uniqBy = _uniqBy(tempArr, 'id') // id가 중복되는 배열 제거 ((같은 테이블 반복표출 제거))
+            for (let j = 0; j < uniqBy.length; j++) { //테이블수만큼 반복
+              let filtered = uniqBy[j].orders.filter(el => el.orderStatus == payload) // 테이블의 메뉴들에서 페이로드 타입만 필터
+              uniqBy[j].orders = filtered // 테이블들에 필터된 메뉴 목록들 대입
+              commit('updateOrderList', [...state.orderList, uniqBy[j]]) // 최종 대입
+            }
+
           }
         }
       }
     },
+
 
     async orderTypeChange({ dispatch }, payload) {
       const actoken = VueCookies.get("accessToken")
@@ -68,7 +78,6 @@ export default {
         .catch(err => {
           console.log(err)
         })
-      dispatch('getTypeOrders')
     },
 
     getStatus({ commit }, payload) {

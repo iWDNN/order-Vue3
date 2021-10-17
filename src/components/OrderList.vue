@@ -75,7 +75,7 @@ export default {
         font-size:12px;
         background-color:transparent;
         &:hover{
-          border-bottom:2px solid $m4;
+          font-weight:700;
         }
         &:focus{
           font-weight:700;

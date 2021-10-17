@@ -1,7 +1,8 @@
 <template>
   <div
     v-if="detailToggle"
-    class="showTable">
+    class="showTable"
+    :class="{'order':tableInfo.tableStatus=='INUSE'}">
     <div class="title">
       <div
         v-if="!putToggle"
@@ -49,7 +50,7 @@
           :key="menu.id">
           <td>{{ menu.name }}</td>
           <td>{{ menu.count }}</td>
-          <td>{{ menu.orderPrice }}</td>
+          <td>{{ numberWithCommas(menu.orderPrice) }}</td>
         </tr>
       </table>
     </div>
@@ -58,7 +59,9 @@
         <span>요청사항</span>
       </h2>
       <div class="rq-info fj">
-        <div class="box">
+        <div
+          class="box"
+          :class="{'order':tableInfo.tableStatus=='INUSE'}">
           <span
             v-for="menu in tableInfo.orders"
             :key="menu.id">{{ menu.request }}</span>
@@ -72,7 +75,7 @@
       <h2
         v-if="tableInfo.orders"
         class="sum fcc">
-        {{ tableInfo.totalPrice }}
+        {{ numberWithCommas(tableInfo.totalPrice) }}
       </h2>
     </div>
     <div class="pay fcc">
@@ -107,6 +110,9 @@ export default {
   },
   
   methods:{
+    numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
     // 테이블 디테일 호출
     showTableInfo(){
       this.$store.commit('status/updateToggle')
@@ -140,6 +146,7 @@ export default {
         type:type
       }
       await this.$store.dispatch('order/orderTypeChange',data)
+      .then(this.$store.commit('status/updateToggle'))
       this.$store.dispatch('table/resetTable',data.table)
     }
 
@@ -161,6 +168,10 @@ export default {
   border-bottom-left-radius: 15px;
   margin:10px 0;
   flex-direction: column;
+  &.order{
+    background-color:$m2;
+    color:$m5;
+  }
   .title{
     height:5%;
     display:flex;
@@ -225,6 +236,7 @@ export default {
   .order-list{
     height:50%;
     margin:30px 0;
+    overflow:auto;
     h2{
       margin:20px 0; 
       span{
@@ -233,30 +245,30 @@ export default {
       }
     }
     table{
-        width:100%;
-        font-size:15px;
-        font-weight: 500;
-        tr:first-child{
-          text-align: center;
-          border-bottom: 1px solid #EEEEEE;
-          th{
-            font-size:13px;
-            padding-top:2px;
-            padding-bottom:10px;
-          }
-        }
-        tr{
-          font-size:12px;
-          td:first-child{
-            padding-left:5px;
-            text-align: start;
-          }
-          td{
-            text-align: center;
-            padding:8px 0;
-          }
+      width:100%;
+      font-size:15px;
+      font-weight: 500;
+      tr:first-child{
+        text-align: center;
+        border-bottom: 1px solid #EEEEEE;
+        th{
+          font-size:13px;
+          padding-top:2px;
+          padding-bottom:10px;
         }
       }
+      tr{
+        font-size:12px;
+        td:first-child{
+          padding-left:5px;
+          text-align: start;
+        }
+        td{
+          text-align: center;
+          padding:8px 0;
+        }
+      }
+    }
   }
   .request{
     height:20%;
@@ -277,6 +289,7 @@ export default {
         padding:10px 10px;
         box-sizing: border-box;
         word-break: break-all;
+        border-radius:10px;
         overflow: auto;
         opacity: 0.6;
         span:first-child{
@@ -284,6 +297,11 @@ export default {
         }
         span:not(:first-of-type){
           display:none;
+        }
+        &.order{
+          opacity: 1;
+          background-color:$gray-200;
+          color:$m2;
         }
       }
     }

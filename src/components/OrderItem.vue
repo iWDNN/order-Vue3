@@ -1,5 +1,7 @@
 <template>
-  <div class="orders">
+  <div 
+    v-if="!hide"
+    class="orders">
     <div
       class="title"
       :class="orderStatus">
@@ -17,7 +19,7 @@
       </div>
     </div>
     <div class="info fcc">
-      <div class="menu-list">
+      <div class="menu-list fj">
         <table>
           <tr>
             <th>상품명</th>
@@ -30,8 +32,14 @@
             <td
               class="fa">
               {{ item.name }}
+            </td>
+            <td>
+              {{ item.count }}
+            </td>
+            <td
+              class="fcc"
+              v-show="toggle.showDel">
               <button
-                v-show="toggle.showDel"
                 @click="menuDelete(item.id)"
                 class="menu-delete fcc">
                 <img
@@ -39,7 +47,6 @@
                   alt="" />
               </button>
             </td>
-            <td>{{ item.count }}</td>
             <!-- <td>hi</td> -->
           </tr>
         </table>
@@ -58,7 +65,8 @@
           </div>
         </div>
       </div>
-      <div class="btns fa">
+      <div
+        class="btns fa">
         <div
           v-if="orderStatus=='order'"
           class="line fa">
@@ -69,7 +77,6 @@
             조리시작
           </button>
           <button
-            v-if="orderStatus=='order'"
             @click="toggle.showDel=!toggle.showDel"
             :class="{'active':toggle.showDel}"
             class="btn order-del">
@@ -109,7 +116,8 @@ export default {
       result:[],
       toggle:{
         showDel:false
-      }
+      },
+      hide:false
     }
   },
   computed:{
@@ -118,12 +126,13 @@ export default {
     ])
   },
   methods:{
-    changeStatus(type){
+    async changeStatus(type){
       const data = {
         order: this.order.orders,
         type:type
       }
       this.$store.dispatch('order/orderTypeChange',data)
+      this.hide=true
     },
     menuDelete(orders){
       const data = orders
@@ -142,7 +151,6 @@ export default {
   border-radius: 10px;
   border:1px solid #EEEEEE;
   overflow:hidden;
-  font-family: 'roboto',sans-serif;
   box-sizing: border-box;
   flex-shrink: 0;
   .title{
@@ -213,11 +221,16 @@ export default {
         width:303px;
         font-size:15px;
         font-weight: 500;
+        margin:0 5px auto;
         tr:first-child{
-          text-align: center;
           border-bottom: 1px solid #EEEEEE;
           th{
+            text-align: center;
             padding-bottom:10px;
+            &:first-child{
+              text-align: start;
+              padding-left:20px;
+            }
           }
         }
         tr{
@@ -234,9 +247,8 @@ export default {
               height:13px;
               background-color:$m1;
               border:none;
-              margin-left:5px;
+              margin-left:3px;
               img{
-                padding-bottom:2px;
                 width:13px;
                 height:100%;
               }
@@ -298,11 +310,18 @@ export default {
             border:1px solid $m5;
             background-color:$apply;
             color:$m5;
+            &:hover{
+              background-color:darken($apply,5%);
+            }
           }
           &.cook{
+            width:100%;
             border:1px solid $m5;
             background-color:$cooking;
             color:$m5;
+            &:hover{
+              background-color:darken($cooking,10%);
+            }
           }
         }
         .btn.order-del{

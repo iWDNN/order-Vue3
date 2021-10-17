@@ -17,6 +17,13 @@
       </div>
       <div class="box-two">
         <div class="icon-grp fa">
+          <!-- <div
+            v-if="orderAlert"
+            class="order fcc">
+            <img
+              src="https://raw.githubusercontent.com/iWDNN/temp/master/outline_rate_review_black_24dp.png"
+              alt="" />
+          </div> -->
           <div
             v-if="request"
             class="request fcc">
@@ -34,10 +41,14 @@
           v-for="menu in table.orders"
           :key="menu.id"
           class="menu-item fa">
-          <div class="name fa">
+          <div
+            :class="{'order': menu.orderStatus=='ORDER','cook': menu.orderStatus=='COOK'}"
+            class="name  fa">
             {{ menu.name }}
           </div>
-          <div class="count fa">
+          <div 
+            :class="{'order': menu.orderStatus=='ORDER','cook': menu.orderStatus=='COOK'}"
+            class="count fa">
             {{ menu.count }}
           </div>
         </div>
@@ -57,12 +68,14 @@ export default {
   created(){
     this.$store.dispatch('order/getStatus',this.table.orders)
     this.checkRequest(this.table.orders)
+    // this.checkOrder(this.table.orders)
   },
   data(){
     return{
       toggle:false,
       count:0,
-      request:false
+      request:false,
+      orderAlert:false
     }
   },
   computed:{
@@ -87,9 +100,15 @@ export default {
           this.request = false
         }
       }
-
-    }
-    
+    },
+    // checkOrder(orders){
+    //   for(let i = 0; i<orders.length;i++){
+    //     if(orders[i].orderStatus =='ORDER'){
+    //       this.orderAlert=true
+    //       break
+    //     } 
+    //   }
+    // }
   }
 }
 </script>
@@ -107,9 +126,9 @@ export default {
   overflow:hidden;
   color:$m2;
   &.in-use{
-      background-color:$m2;
-      color:$m5;
-    }
+    background-color:$m2;
+    color:$m5;
+  }
   .title{
     width:100%;
     height:40%;
@@ -178,11 +197,25 @@ export default {
           text-align:start;
           font-size:12px;
           width:70%;
+          &.order{
+            color:#58b2fc;
+          }
+          &.cook{
+            color:$cooking;
+          }
         }
         .count{
           width:20%;
           font-size:12px;
           margin-left:5px;
+          &.order{
+            color:#58b2fc;
+            font-weight: 700;
+          }
+          &.cook{
+            color:$cooking;
+            font-weight: 700;
+          }
         }
       }
     }
